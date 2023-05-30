@@ -17,8 +17,8 @@ const Table: FC<Props> = ({ tableData }) => {
     <table className='w-full text-sm table-auto text-center text-skin-primary rounded-lg'>
       <thead className='text-xs text-skin-inverted uppercase bg-skin-primary dark:text-gray-400'>
         <tr>
-          {tableData.headers.map(header => (
-            <th scope='col' className='px-4 py-2'>
+          {tableData.headers.map((header, i) => (
+            <th key={i} scope='col' className='px-4 py-2'>
               {header}
             </th>
           ))}
@@ -33,8 +33,8 @@ const Table: FC<Props> = ({ tableData }) => {
               row.mark ? 'bg-red-200' : 'bg-green-100'
             )}
           >
-            {row.cells.map(cell => (
-              <td scope='row' className='x-4 py-2'>
+            {row.cells.map((cell, i) => (
+              <td key={i} scope='row' className='x-4 py-2'>
                 <>{cell}</>
               </td>
             ))}

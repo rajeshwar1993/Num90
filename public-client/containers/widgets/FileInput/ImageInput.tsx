@@ -127,8 +127,8 @@ const ImageInput: FC<Props> = ({
 
         {selectedImages.length > 0 && (
           <div className='flex gap-x-4 items-center'>
-            {selectedImages.map(img => (
-              <div className='relative'>
+            {selectedImages.map((img, index) => (
+              <div key={index} className='relative'>
                 {img.savedImage === null && (
                   <div
                     className={clsx(

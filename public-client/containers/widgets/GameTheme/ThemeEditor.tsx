@@ -1,9 +1,7 @@
-import { GameTheme, ThemeOption } from '../../../data_models';
-import { FC, useMemo, useState } from 'react';
+import { ThemeOption } from '../../../data_models';
+import { FC, useMemo } from 'react';
 import { ColorSample, SelectInput, SubHeading } from '../../../components';
 import ImageInput, { SelectedImage } from '../FileInput/ImageInput';
-import CustImage from '../CustImage';
-import clsx from 'clsx';
 import ThemePreview from './ThemePreview';
 
 interface Props {
