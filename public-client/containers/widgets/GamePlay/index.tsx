@@ -66,7 +66,7 @@ const GamePlay: FC<Props> = ({ gameID, gamePlay }) => {
       >
         <div className='md:col-span-2'>
           <GameControls
-            title={gamePlay.gameMeta.title}
+            title={gamePlay.gameMeta?.title ?? ''}
             gameSate={gameState}
             startGame={startGame}
             resumeGame={resumeGame}

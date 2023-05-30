@@ -39,9 +39,11 @@ const Page: FC<{ params: { connectorID: string; gameID: string } }> = ({
     return <h1>Loading...</h1>;
   } else if (!loading && gamePlay === null) {
     return <h1>No Game found...</h1>;
+  } else if (gamePlay !== null) {
+    return <GamePlay gameID={params.gameID} gamePlay={gamePlay} />;
   }
 
-  return <GamePlay gameID={params.gameID} gamePlay={gamePlay} />;
+  return <></>;
 };
 
 export default Page;
