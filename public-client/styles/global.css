@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+
+    :root {
+      /* Define colors */
+      --bg-base: 245, 245, 245;
+      --text: 0, 0, 0;
+      --text-inverted: 255, 255, 255;
+
+      --primary: 0, 0, 0;  /* violet:800 */
+      --accent:190, 24, 93; /* Pink:700 */
+      --error:153, 27, 27; /* Red:800 */
+    }
+  
+    .root-dark {
+      --bg-base: 0, 0, 0;
+      --text: 255, 255, 255;
+      --text-inverted: 0, 0, 0;
+
+      --primary: 255, 255, 255;  /* violet:800 */
+      --accent:190, 24, 93; /* Pink:700 */
+      --error:153, 27, 27; /* Red:800 */
+    }
+  }
