@@ -87,6 +87,11 @@ const GameMetaDisplay: FC<Props> = ({
                   </span>{' '}
                   {'(Click to open game)'}
                 </Link>
+                <Link href={`/game-display/${gameMeta.gameId}/${ag}`}>
+                  <span className='block text-xs hover:underline underline-offset-2'>
+                    open display screen
+                  </span>
+                </Link>
               </li>
             ))}
           </ul>
