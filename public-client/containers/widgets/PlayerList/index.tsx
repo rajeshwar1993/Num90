@@ -134,7 +134,7 @@ const PlayerList: FC<Props> = ({
             <QRCode
               size={256}
               style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
-              value={`http://localhost:3000/join-game/${gameID}/${connectorId}`}
+              value={`${process.env.NEXT_PUBLIC_BASE_URL}/join-game/${gameID}/${connectorId}`}
               viewBox={`0 0 256 256`}
             />
           </div>

@@ -1,6 +1,6 @@
 {
   "rules": {
-    ".read": false,  // 2023-5-23
-    ".write": false,  // 2023-5-23
+    ".read": true, // 2023-5-23
+    ".write": true // 2023-5-23
   }
 }
