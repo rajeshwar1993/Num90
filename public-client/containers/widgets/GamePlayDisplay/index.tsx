@@ -10,7 +10,7 @@ import { GameState } from '@/constants/enums';
 import { Heading, Para, SubHeading, Table } from '../../../components';
 import QRCode from 'react-qr-code';
 import CustImage from '../CustImage';
-import logo from '../../../public/images/logo.jpg';
+import logo from '../../../public/images/logo.png';
 
 interface Props {
   gameID: string;
@@ -126,7 +126,7 @@ const GamePlayDisplay: FC<Props> = ({ gameID, gamePlay }) => {
             <div className='w-9 aspect-square rounded-lg overflow-hidden'>
               <CustImage
                 image={{
-                  src: logo.src,
+                  src: gamePlay.gameMeta?.theme.logo?.src || logo.src,
                   alt: 'Logo'
                 }}
               />

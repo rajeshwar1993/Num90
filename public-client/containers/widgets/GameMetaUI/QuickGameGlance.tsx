@@ -1,7 +1,7 @@
 import { GameMetaGlanceModel } from '../../../data_models';
 import { FC } from 'react';
 import CustImage from '../CustImage';
-import logo from '../../../public/images/logo.jpg';
+import logo from '../../../public/images/logo.png';
 
 interface Props {
   glance: GameMetaGlanceModel;

@@ -1,7 +1,7 @@
 import { UserModel } from '../../../data_models';
 import { FC } from 'react';
 import CustImage from '../CustImage';
-import logo from '../../../public/images/logo.jpg';
+import logo from '../../../public/images/logo.png';
 import { Button, Para, SubHeading } from '../../../components';
 import { CheckCircledIcon } from '@radix-ui/react-icons';
 import AvatarComp from '../Avatar';

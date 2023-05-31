@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { FC } from 'react';
 import { Image as ImageModel } from '../../../data_models';
-import defImg from '../../../public/images/logo.jpg';
+import defImg from '../../../public/images/logo.png';
 
 interface Props {
   image: ImageModel;

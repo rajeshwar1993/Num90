@@ -3,7 +3,7 @@ import { GameTheme } from '../../../data_models';
 import { FC } from 'react';
 import { ColorSample, SubHeading } from '../../../components';
 import CustImage from '../CustImage';
-import logoImg from '../../../public/images/logo.jpg';
+import logoImg from '../../../public/images/logo.png';
 import bgImage from '../../../public/images/bgImage.jpg';
 import ThemePreview from './ThemePreview';
 
@@ -64,11 +64,11 @@ const ThemeDisplay: FC<Props> = ({ theme }) => {
           </div>
         </div>
       </div>
-      <ThemePreview
+      {/* <ThemePreview
         pack={theme.pack}
         logo={theme.logo?.src}
         bgImage={theme.bgImage?.src}
-      />
+      /> */}
     </div>
   );
 };

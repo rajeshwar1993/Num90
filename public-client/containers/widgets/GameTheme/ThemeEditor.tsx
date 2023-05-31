@@ -124,7 +124,7 @@ const ThemeEditor: FC<Props> = ({
           />
         </div>
       </div>
-      <ThemePreview pack={chosenTheme} logo={null} bgImage={null} />
+      {/* <ThemePreview pack={chosenTheme} logo={null} bgImage={null} /> */}
     </div>
   );
 };
