@@ -1,12 +1,6 @@
 import React, { FC } from 'react';
 import tid from '../../../constants/testids';
-import {
-  Button,
-  Checkbox,
-  Form,
-  SubHeading,
-  TextInput
-} from '../../../components';
+import { Button, Form, SubHeading, TextInput } from '../../../components';
 
 interface Props {
   onSave: (name: string, dob: string, state: string, country: string) => void;
@@ -16,17 +10,17 @@ const PlayerDataForm: FC<Props> = ({ onSave }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as typeof e.target & {
       name: { value: string };
-      dob: { value: string };
-      state: { value: string };
-      country: { value: string };
+      // dob: { value: string };
+      // state: { value: string };
+      // country: { value: string };
     };
 
     const name = target.name.value; // typechecks!
-    const dob = target.dob.value; // typechecks!
-    const state = target.state.value; // typechecks!
-    const country = target.country.value; // typechecks!
+    // const dob = target.dob.value; // typechecks!
+    // const state = target.state.value; // typechecks!
+    // const country = target.country.value; // typechecks!
 
-    onSave(name, dob, state, country);
+    onSave(name, '', '', '');
   };
 
   return (
@@ -42,7 +36,7 @@ const PlayerDataForm: FC<Props> = ({ onSave }) => {
           name={'name'}
           id={'name'}
         />
-        <TextInput
+        {/* <TextInput
           required
           label='DOB'
           type={'text'}
@@ -67,7 +61,7 @@ const PlayerDataForm: FC<Props> = ({ onSave }) => {
           placeholder={'eg. India'}
           name={'country'}
           id={'country'}
-        />
+        /> */}
 
         <Button
           color='accent'
