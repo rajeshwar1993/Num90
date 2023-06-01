@@ -25,10 +25,11 @@ module.exports = {
         'accent-soft': withOpacity('--accent-soft')
       },
 
+      fontFamily: {
+        'sans-serif': ['Roboto']
+      },
+
       textColor: {
-        fontFamily: {
-          'sans-serif': ['Roboto']
-        },
         skin: {
           primary: withOpacity('--text'),
           accent: withOpacity('--accent'),
