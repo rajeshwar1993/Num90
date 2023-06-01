@@ -37,8 +37,10 @@ const GameControls: FC<Props> = ({
     gameSate === GameState.EVAL;
 
   return (
-    <div className='grid grid-cols-2 gap-x-2 shadow-lg border rounded-lg p-4 border-skin-primary '>
-      <Heading>{title}</Heading>
+    <div className='grid grid-cols-2 gap-x-2 shadow-lg border rounded-lg p-4 border-skin-primary'>
+      <h1 className=' text-2xl md:text-4xl font-semibold line-clamp-2'>
+        {title}
+      </h1>
       <div className='grid grid-cols-2 gap-2'>
         <Button
           size='sm'

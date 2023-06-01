@@ -29,7 +29,7 @@ const Table: FC<Props> = ({ tableData }) => {
           <tr
             key={row.id}
             className={clsx(
-              'border-b-4 text-base',
+              'border-b-4 text-base font-semibold',
               row.mark ? 'bg-red-200' : 'bg-green-100'
             )}
           >

@@ -35,7 +35,7 @@ const GameMetaDisplay: FC<Props> = ({
 
   return (
     <div className={clsx('grid', 'grid-cols-1', 'gap-6')}>
-      {!gameMeta.isPremium && (
+      {false && !gameMeta.isPremium && (
         <div className='flex items-center gap-x-4 text-skin-error font-semibold p-2 border rounded-lg border-skin-error'>
           <div className='text-6xl'>!</div>
           <div>

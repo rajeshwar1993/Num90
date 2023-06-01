@@ -317,7 +317,7 @@ const Nav: FC<Props> = ({}) => {
             />
           </div>
         </NavigationMenu.Root>
-        {user && !user.verified && user.email && (
+        {false && user && !user.verified && user.email && (
           <div className='max-w-sm mx-auto mt-2 flex flex-col gap-y-1 items-center text-xs md:text-sm p-2 rounded-lg bg-skin-error text-skin-inverted'>
             <span>
               A verification mail has been sent. Please check and verify.
