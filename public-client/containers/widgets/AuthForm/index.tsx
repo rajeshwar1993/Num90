@@ -1,11 +1,11 @@
 'use client';
 
 import { FC, useMemo, useState } from 'react';
-import { Button } from '../../../components';
 import ForgotPasswordForm from './forgotPassword';
 import LoginForm from './login';
 import SignupForm from './signup';
 import { AuthModelState } from '../../../constants/enums';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   activeTab: AuthModelState | false;
@@ -54,13 +54,22 @@ const AuthForm: FC<Props> = ({
   }, [selectedIndex]);
 
   return (
-    <div className='max-w-sm'>
+    <div className='text-left max-w-sm'>
       {formToShow}
       {selectedIndex !== 2 && (
         <div className='my-4'>
-          <div className='my-2 text-center'>or</div>
-          <Button styleClasses='w-full' onClick={createUserWithGoogle}>
-            Continue with Google
+          <div className='relative mb-4'>
+            <div className='absolute inset-0 flex items-center'>
+              <span className='w-full border-t' />
+            </div>
+            <div className='relative flex justify-center text-xs uppercase'>
+              <span className='bg-background px-2 text-muted-foreground'>
+                Or continue with
+              </span>
+            </div>
+          </div>
+          <Button onClick={createUserWithGoogle} className='w-full'>
+            Google
           </Button>
         </div>
       )}

@@ -1,13 +1,11 @@
 import React, { FC } from 'react';
 // import { handleRuntimeErrors } from '../../../core/commonHandlers';
 import tid from '../../../constants/testids';
-import {
-  Button,
-  Checkbox,
-  Form,
-  SubHeading,
-  TextInput
-} from '../../../components';
+import { Form } from '../../../components';
+import { CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 interface Props {
   onSignup: (email: string, password: string) => void;
@@ -43,40 +41,52 @@ const SignupForm: FC<Props> = ({ onSignup, changeTab }) => {
 
   return (
     <Form submitHandlerFunc={handleSubmit}>
-      <div className={'flex flex-col gap-y-4'}>
-        <SubHeading>Signup</SubHeading>
-        <TextInput
-          required
-          label='Email address'
-          placeholder={'E-mail'}
-          type={'email'}
-          name={'email'}
-          id={'email'}
-          testid={tid.inpLoginEmail}
-        />
-        <TextInput
-          required
-          label='Password'
-          placeholder={'Passoword'}
-          type={'password'}
-          name={'password'}
-          id={'password'}
-          testid={tid.inpLoginPassword}
-        />
-        <TextInput
-          type={'password'}
-          label='Confirm password'
-          placeholder={'Confirm password'}
-          name={'confirmPass'}
-          id={'confirmPass'}
-          testid={tid.inpLoginConfirmPassword}
-        />
-        <Button type='submit' color='accent' testid={tid.btnSignupSubmit}>
+      <CardHeader className='space-y-1'>
+        <CardTitle className='text-2xl'>Create account</CardTitle>
+      </CardHeader>
+      <div className={'grid gap-4'}>
+        <div className='grid gap-2'>
+          <Label htmlFor='email'>Email address *</Label>
+          <Input
+            required
+            type={'email'}
+            placeholder={'E-mail'}
+            name={'email'}
+            id={'email'}
+            testid={tid.inpLoginEmail}
+          />
+        </div>
+        <div className='grid gap-2'>
+          <Label htmlFor='password'>Password</Label>
+          <Input
+            required
+            type={'password'}
+            placeholder={'Password'}
+            name={'password'}
+            id={'password'}
+            testid={tid.inpLoginPassword}
+          />
+        </div>
+        <div className='grid gap-2'>
+          <Label htmlFor='confirmPass'>Confirm Password</Label>
+          <Input
+            required
+            type={'password'}
+            placeholder={'Confirm password'}
+            name={'confirmPass'}
+            id={'confirmPass'}
+            testid={tid.inpLoginPassword}
+          />
+        </div>
+
+        <Button type='submit' testid={tid.btnSignupSubmit}>
           Signup
         </Button>
         <div className='text-center'>
-          <span>Already a member? </span>
-          <Button look='link' onClick={changeTab.bind(null, 1)}>
+          <small className='text-sm font-normal leading-none'>
+            have an account?
+          </small>
+          <Button variant='link' onClick={changeTab.bind(null, 1)}>
             Login
           </Button>
         </div>

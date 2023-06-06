@@ -5,6 +5,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import Button from '../Button';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { Card, CardContent } from '../ui/card';
 
 interface Props {
   open: boolean;
@@ -25,7 +26,7 @@ const ModalDialog: FC<Props> = ({ open, closeModal, children }) => {
           leaveFrom='opacity-100'
           leaveTo='opacity-0'
         >
-          <div className='fixed inset-0 bg-skin-primary bg-opacity-60' />
+          <div className='fixed inset-0 bg-background/70' />
         </Transition.Child>
 
         <div className='fixed inset-0 overflow-y-auto'>
@@ -40,34 +41,30 @@ const ModalDialog: FC<Props> = ({ open, closeModal, children }) => {
               leaveTo='opacity-0 scale-95'
             >
               <Dialog.Panel
-                className={clsx(
-                  'relative',
-                  'inline-block',
-                  'max-w-sm',
-                  'min-w-[300px]',
-                  'md:max-w-xl',
-                  'md:min-w-[400px]',
-                  'lg:max-w-3xl',
-                  'xl:max-w-5xl',
-                  'p-5',
-                  'text-left',
-                  'align-middle',
-                  'transition-all',
-                  'transform',
-                  'bg-skin-base',
-                  'shadow-xl',
-                  'rounded-lg'
-                )}
+                className={clsx('transition-all', 'transform', 'shadow-xl')}
               >
-                <Button
-                  onClick={closeModal}
-                  styleClasses='absolute right-2 top-2'
-                  onlyIcon={true}
+                <Card
+                  className={clsx(
+                    'relative',
+                    'inline-block',
+                    'max-w-sm',
+                    'min-w-[300px]',
+                    'md:max-w-xl',
+                    'md:min-w-[400px]',
+                    'lg:max-w-3xl',
+                    'xl:max-w-5xl',
+                    'align-middle'
+                  )}
                 >
-                  <Cross2Icon />
-                </Button>
-
-                {children}
+                  <Button
+                    onClick={closeModal}
+                    styleClasses='absolute right-2 top-2'
+                    onlyIcon={true}
+                  >
+                    <Cross2Icon />
+                  </Button>
+                  <CardContent>{children}</CardContent>
+                </Card>
               </Dialog.Panel>
             </Transition.Child>
           </div>

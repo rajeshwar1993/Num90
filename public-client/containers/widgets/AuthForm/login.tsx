@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import tid from '../../../constants/testids';
-import {
-  Button,
-  Checkbox,
-  Form,
-  SubHeading,
-  TextInput
-} from '../../../components';
+import { Form } from '../../../components';
+import { CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Separator } from '@/components/ui/separator';
 
 interface Props {
   onLogin: (email: string, password: string, remember: boolean) => void;
@@ -30,35 +30,45 @@ const LoginForm: FC<Props> = ({ onLogin, changeTab }) => {
 
   return (
     <Form submitHandlerFunc={handleSubmit} testid={tid.formLogin}>
-      <div className={'flex flex-col gap-y-4'}>
-        <SubHeading>Login</SubHeading>
-
-        <TextInput
-          required
-          label='Email address'
-          type={'email'}
-          placeholder={'E-mail'}
-          name={'email'}
-          id={'email'}
-          testid={tid.inpLoginEmail}
-        />
-        <TextInput
-          required
-          label='Password'
-          type={'password'}
-          placeholder={'Password'}
-          name={'password'}
-          id={'password'}
-          testid={tid.inpLoginPassword}
-        />
-        <div className={'flex justify-between items-center'}>
-          <Checkbox
-            id='remember'
-            label='Remember me'
-            name='remember'
-            defaultValue={true}
+      <CardHeader className='space-y-1'>
+        <CardTitle className='text-2xl'>Login</CardTitle>
+      </CardHeader>
+      <div className={'grid gap-4'}>
+        <div className='grid gap-2'>
+          <Label htmlFor='email'>Email address *</Label>
+          <Input
+            required
+            type={'email'}
+            placeholder={'E-mail'}
+            name={'email'}
+            id={'email'}
+            testid={tid.inpLoginEmail}
           />
-          <Button look='link' onClick={changeTab.bind(null, 2)}>
+        </div>
+        <div className='grid gap-2'>
+          <Label htmlFor='password'>Password</Label>
+          <Input
+            required
+            type={'password'}
+            placeholder={'Password'}
+            name={'password'}
+            id={'password'}
+            testid={tid.inpLoginPassword}
+          />
+        </div>
+
+        <div className={'flex items-center'}>
+          <div className='flex items-center space-x-2'>
+            <Checkbox id='remember' />
+            <label
+              htmlFor='remember'
+              className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+            >
+              remember me
+            </label>
+          </div>
+          <Separator orientation='vertical' className='ml-4' />
+          <Button variant='link' size={'sm'} onClick={changeTab.bind(null, 2)}>
             forgot password?
           </Button>
         </div>
@@ -66,8 +76,11 @@ const LoginForm: FC<Props> = ({ onLogin, changeTab }) => {
           Login
         </Button>
         <div className='text-center'>
-          <span>Not a member? </span>
-          <Button look='link' onClick={changeTab.bind(null, 0)}>
+          <small className='text-sm font-normal leading-none'>
+            not a member?
+          </small>
+
+          <Button variant='link' onClick={changeTab.bind(null, 0)}>
             Signup
           </Button>
         </div>
