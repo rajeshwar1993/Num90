@@ -1,6 +1,7 @@
 import { GameMetaModel } from '../../../data_models';
 import { FC, Fragment } from 'react';
 import { Button, GameListGlance, SelectInput } from '../../../components';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface Props {
   list: GameMetaModel[];
@@ -45,17 +46,19 @@ const GameList: FC<Props> = ({ list, selectedGame, selectGame }) => {
         />
       </div>
 
-      <div className='hidden lg:flex flex-col gap-y-6 bg-skin-base lg:pr-6 border-r'>
-        <span className='font-semibold'>Change Game</span>
+      <ScrollArea className='hidden lg:flex flex-col gap-y-6 bg-skin-base lg:pr-6 border-r'>
+        <h4 className='scroll-m-20 text-xl font-semibold tracking-tight mb-4'>
+          All games
+        </h4>
         {list.map(game => (
-          <div key={game.uid} onClick={() => selectGame(game)}>
-            <GameListGlance
-              gameGlance={game}
-              selected={selectedGame.uid === game.uid}
-            />
-          </div>
+          <GameListGlance
+            key={game.uid}
+            gameGlance={game}
+            selected={selectedGame.uid === game.uid}
+            onClick={()=> selectGame(game)}
+          />
         ))}
-      </div>
+      </ScrollArea>
     </>
   );
 };

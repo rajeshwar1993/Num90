@@ -1,41 +1,39 @@
-import { GameGlance } from 'models';
+import { GameGlance } from '../../data_models';
 import { FC } from 'react';
 import clsx from 'clsx';
+import { Card } from '../ui/card';
 
 interface Props {
   selected: boolean;
   gameGlance: GameGlance;
+  onClick: () => void;
 }
 
-const GameListGlance: FC<Props> = ({ gameGlance, selected }) => {
+const GameListGlance: FC<Props> = ({ gameGlance, selected, onClick }) => {
   return (
-    <button
+    <Card
       className={clsx(
         'w-full',
+        'my-2',
         'py-2',
         'px-4',
         'text-left',
-        'rounded-lg',
-        'border',
-        selected
-          ? 'text-skin-accent border-skin-accent'
-          : 'text-skin-primary border-skin-primary',
-        'bg-skin-base',
+        selected && 'text-accent border-accent',
         !selected &&
-          'hover:bg-skin-accent hover:text-skin-inverted cursor-pointer',
+          'hover:bg-accent hover:text-accent-foreground cursor-pointer',
         'transition',
         'duration-150',
         'ease-in-out',
         'flex',
         'flex-col'
       )}
-      disabled={selected}
+      onClick={!selected ? onClick : () => {}}
     >
       <span className={clsx('text-md', 'xl:text-lg')}>{gameGlance.title}</span>
       <span className='font-normal text-sm tracking-widest'>
         ({gameGlance.gameId})
       </span>
-    </button>
+    </Card>
   );
 };
 

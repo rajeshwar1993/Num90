@@ -103,9 +103,9 @@ export default function Page() {
           'lg:justify-start'
         )}
       >
-        <h2 className={clsx('text-5xl', 'font-semibold', 'whitespace-nowrap')}>
+        <h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
           My games
-        </h2>
+        </h1>
         <CreateNewGame onCreate={createGame} />
       </div>
       {selectedGame && (

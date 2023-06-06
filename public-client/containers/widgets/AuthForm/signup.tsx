@@ -41,7 +41,7 @@ const SignupForm: FC<Props> = ({ onSignup, changeTab }) => {
 
   return (
     <Form submitHandlerFunc={handleSubmit}>
-      <CardHeader className='space-y-1'>
+      <CardHeader className='space-y-1 pl-0'>
         <CardTitle className='text-2xl'>Create account</CardTitle>
       </CardHeader>
       <div className={'grid gap-4'}>

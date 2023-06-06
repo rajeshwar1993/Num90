@@ -29,63 +29,69 @@ const LoginForm: FC<Props> = ({ onLogin, changeTab }) => {
   };
 
   return (
-    <Form submitHandlerFunc={handleSubmit} testid={tid.formLogin}>
-      <CardHeader className='space-y-1'>
-        <CardTitle className='text-2xl'>Login</CardTitle>
-      </CardHeader>
-      <div className={'grid gap-4'}>
-        <div className='grid gap-2'>
-          <Label htmlFor='email'>Email address *</Label>
-          <Input
-            required
-            type={'email'}
-            placeholder={'E-mail'}
-            name={'email'}
-            id={'email'}
-            testid={tid.inpLoginEmail}
-          />
-        </div>
-        <div className='grid gap-2'>
-          <Label htmlFor='password'>Password</Label>
-          <Input
-            required
-            type={'password'}
-            placeholder={'Password'}
-            name={'password'}
-            id={'password'}
-            testid={tid.inpLoginPassword}
-          />
-        </div>
-
-        <div className={'flex items-center'}>
-          <div className='flex items-center space-x-2'>
-            <Checkbox id='remember' />
-            <label
-              htmlFor='remember'
-              className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-            >
-              remember me
-            </label>
+    <div className='text-left'>
+      <Form submitHandlerFunc={handleSubmit} testid={tid.formLogin}>
+        <CardHeader className='space-y-1 pl-0'>
+          <CardTitle className='text-2xl'>Login</CardTitle>
+        </CardHeader>
+        <div className={'grid gap-4'}>
+          <div className='grid gap-2'>
+            <Label htmlFor='email'>Email address *</Label>
+            <Input
+              required
+              type={'email'}
+              placeholder={'E-mail'}
+              name={'email'}
+              id={'email'}
+              testid={tid.inpLoginEmail}
+            />
           </div>
-          <Separator orientation='vertical' className='ml-4' />
-          <Button variant='link' size={'sm'} onClick={changeTab.bind(null, 2)}>
-            forgot password?
-          </Button>
-        </div>
-        <Button color='accent' testid={tid.btnLoginSubmit} type='submit'>
-          Login
-        </Button>
-        <div className='text-center'>
-          <small className='text-sm font-normal leading-none'>
-            not a member?
-          </small>
+          <div className='grid gap-2'>
+            <Label htmlFor='password'>Password</Label>
+            <Input
+              required
+              type={'password'}
+              placeholder={'Password'}
+              name={'password'}
+              id={'password'}
+              testid={tid.inpLoginPassword}
+            />
+          </div>
 
-          <Button variant='link' onClick={changeTab.bind(null, 0)}>
-            Signup
+          <div className={'flex items-center'}>
+            <div className='flex items-center space-x-2'>
+              <Checkbox id='remember' />
+              <label
+                htmlFor='remember'
+                className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                remember me
+              </label>
+            </div>
+            <Separator orientation='vertical' className='ml-4' />
+            <Button
+              variant='link'
+              size={'sm'}
+              onClick={changeTab.bind(null, 2)}
+            >
+              forgot password?
+            </Button>
+          </div>
+          <Button color='accent' testid={tid.btnLoginSubmit} type='submit'>
+            Login
           </Button>
+          <div className='text-center'>
+            <small className='text-sm font-normal leading-none'>
+              not a member?
+            </small>
+
+            <Button variant='link' onClick={changeTab.bind(null, 0)}>
+              Signup
+            </Button>
+          </div>
         </div>
-      </div>
-    </Form>
+      </Form>
+    </div>
   );
 };
 
