@@ -1,63 +1,75 @@
-function withOpacity(variableName) {
-  return ({ opacityValue }) => {
-    if (opacityValue !== undefined) {
-      return `rgba(var(${variableName}), ${opacityValue})`;
-    }
-    return `rgb(var(${variableName}))`;
-  };
-}
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class"],
   content: [
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './containers/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}'
-  ],
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+	],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
-      transitionProperty: {
-        height: 'height'
-      },
-
       colors: {
-        accent: withOpacity('--accent'),
-        'accent-soft': withOpacity('--accent-soft')
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
-
-      fontFamily: {
-        'sans-serif': ['Roboto']
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-
-      textColor: {
-        skin: {
-          primary: withOpacity('--text'),
-          accent: withOpacity('--accent'),
-          inverted: withOpacity('--text-inverted'),
-          error: withOpacity('--error')
-        }
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
       },
-      backgroundColor: {
-        skin: {
-          primary: withOpacity('--primary'),
-          accent: withOpacity('--accent'),
-          error: withOpacity('--error'),
-          base: withOpacity('--bg-base')
-        }
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
-      gradientColorStops: {
-        skin: {
-          hue: withOpacity('--color-fill')
-        }
-      },
-      borderColor: {
-        skin: {
-          primary: withOpacity('--primary'),
-          accent: withOpacity('--accent'),
-          error: withOpacity('--error')
-        }
-      }
-    }
+    },
   },
-  plugins: []
-};
+  plugins: [require("tailwindcss-animate")],
+}
