@@ -1,11 +1,11 @@
 'use client';
 
 import { FC } from 'react';
-import { Button } from '../../../components';
 import useAuth from '../../../app/AuthProvider';
 import { useRouter } from 'next/navigation';
 import Routes from '../../../constants/routes';
 import { AuthModelState } from '../../../constants/enums';
+import { Button } from '@/components/ui/button';
 
 interface Props {}
 
@@ -16,8 +16,7 @@ const LandingCreateGameCTA: FC<Props> = () => {
   return (
     <div>
       <Button
-        solid={true}
-        color='accent'
+        variant={'secondary'}
         size='lg'
         disabled={loading}
         onClick={() => {

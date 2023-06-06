@@ -8,11 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 interface Props {
+  loading: boolean;
   onSignup: (email: string, password: string) => void;
   changeTab: (index: 0 | 1 | 2) => void;
 }
 
-const SignupForm: FC<Props> = ({ onSignup, changeTab }) => {
+const SignupForm: FC<Props> = ({ loading, onSignup, changeTab }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -79,7 +80,7 @@ const SignupForm: FC<Props> = ({ onSignup, changeTab }) => {
           />
         </div>
 
-        <Button type='submit' testid={tid.btnSignupSubmit}>
+        <Button type='submit' loading={loading} testid={tid.btnSignupSubmit}>
           Signup
         </Button>
         <div className='text-center'>

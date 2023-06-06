@@ -8,6 +8,7 @@ import { AuthModelState } from '../../../constants/enums';
 import { Button } from '@/components/ui/button';
 
 interface Props {
+  loading: boolean;
   activeTab: AuthModelState | false;
   onLogin: (email: string, password: string, remember: boolean) => void;
   onSignup: (email: string, password: string) => void;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const AuthForm: FC<Props> = ({
+  loading,
   activeTab,
   onLogin,
   onSignup,
@@ -44,14 +46,22 @@ const AuthForm: FC<Props> = ({
 
   const formToShow = useMemo(() => {
     if (selectedIndex === 0) {
-      return <SignupForm changeTab={changeTab} onSignup={onSignup} />;
+      return (
+        <SignupForm
+          loading={loading}
+          changeTab={changeTab}
+          onSignup={onSignup}
+        />
+      );
     }
     if (selectedIndex === 1) {
-      return <LoginForm changeTab={changeTab} onLogin={onLogin} />;
+      return (
+        <LoginForm loading={loading} changeTab={changeTab} onLogin={onLogin} />
+      );
     }
 
     return <ForgotPasswordForm sendResetPasswordLink={sendResetPasswordLink} />;
-  }, [selectedIndex]);
+  }, [selectedIndex, loading]);
 
   return (
     <div className='text-left max-w-sm'>

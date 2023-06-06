@@ -273,6 +273,7 @@ const Nav: FC<Props> = ({}) => {
 const AuthComp = () => {
   const {
     openAuthModal,
+    loading,
     updateAuthModalVisibility,
     signup,
     login,
@@ -287,6 +288,7 @@ const AuthComp = () => {
         closeModal={() => updateAuthModalVisibility(false)}
       >
         <AuthForm
+          loading={loading}
           activeTab={openAuthModal}
           onLogin={login}
           onSignup={signup}

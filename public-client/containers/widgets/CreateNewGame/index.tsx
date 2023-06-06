@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Icons } from '@/components/icons';
 
 interface Props {
   onCreate: (newGameMeta: GameMetaModel) => void;
@@ -47,14 +48,11 @@ const CreateNewGame: FC<Props> = ({ onCreate }) => {
   return (
     <>
       <div>
-        <Button className='hidden md:block' onClick={showCreateForm}>
+        <Button onClick={showCreateForm}>
           <div className='flex gap-x-1 items-center'>
-            <PlusIcon />
-            Create New Game
+            <Icons.add className='h-4 w-4' />
+            <span className='hidden md:block'> Create New Game</span>
           </div>
-        </Button>
-        <Button className='block md:hidden' onClick={showCreateForm}>
-          <PlusIcon width={25} height={25} />
         </Button>
       </div>
       <ModalDialog open={showForm} closeModal={hideCreateForm}>

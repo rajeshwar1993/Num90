@@ -9,11 +9,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 
 interface Props {
+  loading: boolean;
   onLogin: (email: string, password: string, remember: boolean) => void;
   changeTab: (index: 0 | 1 | 2) => void;
 }
 
-const LoginForm: FC<Props> = ({ onLogin, changeTab }) => {
+const LoginForm: FC<Props> = ({ loading, onLogin, changeTab }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as typeof e.target & {
       email: { value: string };
@@ -77,7 +78,12 @@ const LoginForm: FC<Props> = ({ onLogin, changeTab }) => {
               forgot password?
             </Button>
           </div>
-          <Button color='accent' testid={tid.btnLoginSubmit} type='submit'>
+          <Button
+            color='accent'
+            loading={loading}
+            testid={tid.btnLoginSubmit}
+            type='submit'
+          >
             Login
           </Button>
           <div className='text-center'>
