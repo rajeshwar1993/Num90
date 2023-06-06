@@ -1,4 +1,4 @@
-import '../styles/global.css';
+import './globals.css';
 import '../firebase';
 import Nav from '../containers/Nav';
 import { AuthProvider } from './AuthProvider';
