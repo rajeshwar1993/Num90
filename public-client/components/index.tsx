@@ -12,7 +12,7 @@ import ModalDialog from './ModalDialog';
 import Checkbox from './Checkbox';
 import AccordionComp from './Accordian';
 import SelectInput from './SelectInput';
-import Table from './Table';
+import TableView from './Table';
 import Toast from './Toast';
 import RadioGroup from './RadioGroup';
 import LoadingIcon from './LoadingIcon';
@@ -38,7 +38,7 @@ export {
   Checkbox,
   AccordionComp,
   SelectInput,
-  Table,
+  TableView,
   Toast,
   RadioGroup,
   LoadingIcon,

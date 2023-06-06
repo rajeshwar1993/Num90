@@ -1,5 +1,14 @@
 import clsx from 'clsx';
 import { FC } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '../ui/table';
 
 interface Props {
   tableData: {
@@ -12,37 +21,35 @@ interface Props {
   };
 }
 
-const Table: FC<Props> = ({ tableData }) => {
+const TableView: FC<Props> = ({ tableData }) => {
   return (
-    <table className='w-full text-sm table-auto text-center text-skin-primary rounded-lg'>
-      <thead className='text-xs text-skin-inverted uppercase bg-skin-primary dark:text-gray-400'>
-        <tr>
+    <Table className='border'>
+      <TableCaption>* disclaimer on the prizes</TableCaption>
+      <TableHeader>
+        <TableRow>
           {tableData.headers.map((header, i) => (
-            <th key={i} scope='col' className='px-4 py-2'>
+            <TableHead key={i} scope='col' className='px-4 py-2'>
               {header}
-            </th>
+            </TableHead>
           ))}
-        </tr>
-      </thead>
-      <tbody>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {tableData.rows.map(row => (
-          <tr
+          <TableRow
             key={row.id}
-            className={clsx(
-              'border-b-4 text-base font-semibold',
-              row.mark ? 'bg-red-200' : 'bg-green-100'
-            )}
+            className={clsx('font-semibold', row.mark && 'bg-red-200')}
           >
             {row.cells.map((cell, i) => (
-              <td key={i} scope='row' className='x-4 py-2'>
+              <TableCell key={i} scope='row' className='x-4 py-2'>
                 <>{cell}</>
-              </td>
+              </TableCell>
             ))}
-          </tr>
+          </TableRow>
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 };
 
-export default Table;
+export default TableView;

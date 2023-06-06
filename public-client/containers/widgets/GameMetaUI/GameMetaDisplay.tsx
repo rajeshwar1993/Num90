@@ -2,8 +2,9 @@ import clsx from 'clsx';
 import { GameMetaModel } from '../../../data_models';
 import Link from 'next/link';
 import { FC, useMemo } from 'react';
-import { Button, Para, Pills, SubHeading, Table } from '../../../components';
+import { Button, Para, SubHeading, TableView } from '../../../components';
 import ThemeDisplay from '../GameTheme';
+import { Icons } from '@/components/icons';
 
 interface Props {
   gameMeta: GameMetaModel | null;
@@ -25,7 +26,12 @@ const GameMetaDisplay: FC<Props> = ({
       let row = {
         id: prize.id,
         mark: prize.quantity <= 0,
-        cells: [prize.desc, prize.item, 'x', prize.quantity]
+        cells: [
+          prize.desc,
+          prize.item,
+          <Icons.close className='h-4 w-4' />,
+          prize.quantity
+        ]
       };
       data.rows.push(row);
     });
@@ -104,7 +110,7 @@ const GameMetaDisplay: FC<Props> = ({
         </div>
         <div className='col-span-1'>
           <SubHeading styleClasses='mb-2'>Prizes</SubHeading>
-          <Table tableData={tableData} />
+          <TableView tableData={tableData} />
           {tableData.rows.length === 0 && <Para>No prizes added yet.</Para>}
         </div>
       </div>
