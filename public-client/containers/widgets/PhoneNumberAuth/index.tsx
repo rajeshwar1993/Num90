@@ -5,18 +5,26 @@ import {
   signInWithPhoneNumber,
   unlink
 } from 'firebase/auth';
-import React, { useState, useRef, useEffect } from 'react';
-import { Button, Form, TextInput } from '../../../components';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { Form } from '../../../components';
 import { auth } from '../../../firebase';
+import { CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import SimpleSelect, { SimpleSelectOption } from '@/components/SimpleSelect';
+import { country_codes } from './country_codes';
+import { Button } from '@/components/ui/button';
 
-interface Props {}
+interface Props {
+  title?: string;
+}
 
 let recaptchaVerifier: any = null;
 let cr: any = null;
 let timer: any = null;
 let credential: any = null;
 
-const PhoneVerificationForm: React.FC<Props> = ({}) => {
+const PhoneVerificationForm: React.FC<Props> = ({ title = '' }) => {
   const [smsButtonDisabled, toggleSmsButtonDisabled] = useState(true);
   const [showCodediv, toggleShowCodediv] = useState(false);
   const [timerVal, updateTimerVal] = useState(0);
@@ -55,13 +63,29 @@ const PhoneVerificationForm: React.FC<Props> = ({}) => {
     });
   }, []);
 
+  const countryOptions = useMemo(() => {
+    const options: SimpleSelectOption[] = [];
+
+    country_codes.forEach(item => {
+      options.push({
+        display: `${item.dial_code} (${item.code})`,
+        value: item.dial_code
+      });
+    });
+
+    return options;
+  }, [country_codes]);
+
   const handleSendOTP = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as typeof e.target & {
+      countryCode: { value: string };
       phoneNumber: { value: string };
     };
 
+    const countryCode = target.countryCode.value;
     const phoneNumber = target.phoneNumber.value;
-    sendVerificationCode(phoneNumber);
+    console.log(`${countryCode}${phoneNumber}`);
+    sendVerificationCode(`${countryCode}${phoneNumber}`);
   };
 
   const handleOTPVerify = (e: React.FormEvent<HTMLFormElement>) => {
@@ -171,50 +195,55 @@ const PhoneVerificationForm: React.FC<Props> = ({}) => {
   return (
     <div>
       <Form submitHandlerFunc={handleSendOTP}>
-        <TextInput
-          id='phoneNumber'
-          name='phoneNumber'
-          required
-          label='Phone Number'
-          defaultValue={currentUser?.phoneNumber ?? ''}
-          placeholder='eg +91999999999'
-          description={'Enter phone number prefixed by your country code.'}
-        />
+        <CardHeader className='space-y-1 pl-0'>
+          <CardTitle className='text-2xl'>{title}</CardTitle>
+        </CardHeader>
+        <div className='grid grid-cols-8 gap-2'>
+          <Label htmlFor='phoneNumber' className='col-span-full'>
+            Phone Number *
+          </Label>
+          <SimpleSelect
+            className={'col-span-3'}
+            name='countryCode'
+            options={countryOptions}
+            defaultValue='+91'
+            disabled={true}
+          />
+          <Input
+            required
+            type={'number'}
+            placeholder={'999999999'}
+            name={'phoneNumber'}
+            id={'phoneNumber'}
+            className='col-span-5'
+          />
+        </div>
+
         <div id='recaptcha-container' className='p-5'></div>
         {timerVal !== 0 && (
           <div>
             <span>{`Resend SMS in: ${timerVal} seconds`} </span>
           </div>
         )}
-        <Button
-          type='submit'
-          color='accent'
-          solid={true}
-          styleClasses='w-full'
-          size='lg'
-          loading={isLoading}
-        >
+        <Button type='submit' className='w-full' loading={isLoading}>
           Send OTP
         </Button>
       </Form>
       {showCodediv && (
         <div className='mt-4'>
           <Form submitHandlerFunc={handleOTPVerify}>
-            <TextInput
-              id='otp'
-              placeholder='OTP'
-              name='otp'
-              required
-              label='Enter OTP'
-            />
-            <Button
-              type='submit'
-              color='accent'
-              size='lg'
-              solid={true}
-              styleClasses='w-full mt-2'
-              loading={isLoading}
-            >
+            <div className='grid gap-2'>
+              <Label htmlFor='email'>Enter OTP</Label>
+              <Input
+                required
+                type={'text'}
+                placeholder={'OTP'}
+                name={'otp'}
+                id={'otp'}
+              />
+            </div>
+
+            <Button type='submit' className='w-full mt-2' loading={isLoading}>
               Verify
             </Button>
           </Form>

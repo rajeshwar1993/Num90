@@ -7,6 +7,7 @@ import PlayerGameConnectorForm from '../PlayerGameConnectorForm';
 import useAuth from '../../../app/AuthProvider';
 import PlayerDataForm from '../AuthForm/PlayerDataForm';
 import QuickGameGlance from '../GameMetaUI/QuickGameGlance';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Props {
   gameId?: string;
@@ -23,17 +24,17 @@ const JoinGame: FC<Props> = ({ gameId, connectorId }) => {
     data: null
   });
 
-  const fetchGameData = async (gameId: string) => {
-    setGame(g => ({ ...g, loading: true }));
-    const res = await Firestore.GameMeta.getGameById(gameId);
-    setGame({ data: res || null, loading: false });
-  };
+  // const fetchGameData = async (gameId: string) => {
+  //   setGame(g => ({ ...g, loading: true }));
+  //   const res = await Firestore.GameMeta.getGameById(gameId);
+  //   setGame({ data: res || null, loading: false });
+  // };
 
-  useEffect(() => {
-    if (gameId) {
-      fetchGameData(gameId);
-    }
-  }, [gameId]);
+  // useEffect(() => {
+  //   if (gameId) {
+  //     fetchGameData(gameId);
+  //   }
+  // }, [gameId]);
 
   const toRender = useMemo(() => {
     if (userLoading) {
@@ -47,8 +48,7 @@ const JoinGame: FC<Props> = ({ gameId, connectorId }) => {
     } else if (!userLoading && user === null) {
       return (
         <>
-          <SubHeading styleClasses='mb-4'>Let's join game</SubHeading>
-          <PhoneVerificationForm />
+          <PhoneVerificationForm title={`Let's join the game`} />
         </>
       );
     } else if (user && !user.name) {
@@ -61,19 +61,8 @@ const JoinGame: FC<Props> = ({ gameId, connectorId }) => {
   }, [userLoading, user, gameId, connectorId, game]);
 
   return (
-    <div className='flex flex-col items-center text-left mx-auto max-w-xs mt-8'>
-      {game.data && (
-        <QuickGameGlance
-          glance={{
-            uid: game.data.uid,
-            gameId: game.data.gameId,
-            title: game.data.title,
-            tagline: game.data.tagline,
-            theme: game.data.theme
-          }}
-        />
-      )}
-      <div className='mt-16 flex flex-col items-center'>{toRender}</div>
+    <div className='flex flex-col justify-center items-center text-left mx-auto max-w-xs h-full'>
+      <Card className='p-4 w-full mb-28'>{toRender}</Card>
     </div>
   );
 };
