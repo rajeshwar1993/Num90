@@ -215,53 +215,53 @@ const Nav: FC<Props> = ({}) => {
           />
         </div>
 
-        <div>
-          {/* middle nav for desktop */}
-          <div className='hidden md:block'>
-            <NavigationMenu>
-              <NavigationMenuList>
-                {filteredListItems.map(item => (
-                  <NavigationMenuItem key={item.title}>
-                    <Link href={item.href} legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                      >
-                        {item.title}
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
+        {/* middle nav for desktop */}
+        <div className='hidden md:block'>
+          <NavigationMenu>
+            <NavigationMenuList>
+              {filteredListItems.map(item => (
+                <NavigationMenuItem key={item.title}>
+                  <Link href={item.href} legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      {item.title}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
-        {/* right nav */}
 
-        {user === null && (
-          <div className='flex gap-x-2 md:gap-x-4'>
-            <Button
-              variant={'secondary'}
-              onClick={() => updateAuthModalVisibility(AuthModelState.SIGNUP)}
-            >
-              Signup
-            </Button>
-            <Button
-              variant={'outline'}
-              onClick={() => updateAuthModalVisibility(AuthModelState.LOGIN)}
-            >
-              Login
-            </Button>
+        {/* right nav */}
+        <div className='flex gap-2'>
+          {user === null && (
+            <div className='flex gap-x-2 md:gap-x-4'>
+              <Button
+                variant={'secondary'}
+                onClick={() => updateAuthModalVisibility(AuthModelState.SIGNUP)}
+              >
+                Signup
+              </Button>
+              <Button
+                variant={'outline'}
+                onClick={() => updateAuthModalVisibility(AuthModelState.LOGIN)}
+              >
+                Login
+              </Button>
+            </div>
+          )}
+          {user !== null && (
+            <UserAvatar
+              signout={signout}
+              userData={{ name: user.name || '', image: user.profileImg }}
+            />
+          )}
+          {/* middle nav for mobile */}
+          <div className='md:hidden'>
+            <MobileMenu items={filteredListItems} />
           </div>
-        )}
-        {user !== null && (
-          <UserAvatar
-            signout={signout}
-            userData={{ name: user.name || '', image: user.profileImg }}
-          />
-        )}
-        {/* middle nav for mobile */}
-        <div className='md:hidden'>
-          <MobileMenu items={filteredListItems} />
         </div>
       </div>
 
