@@ -5,7 +5,6 @@ import { FC, Fragment, useMemo } from 'react';
 import { ModalDialog, Toast } from '../../components';
 import useAuth from '../../app/AuthProvider';
 import { AuthModelState } from '../../constants/enums';
-import { CaretDownIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import { Image, NavItem } from '../../data_models';
 import AvatarComp from '../widgets/Avatar';
@@ -26,7 +25,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -192,7 +190,7 @@ const Nav: FC<Props> = ({}) => {
 
   const filteredListItems = useMemo(() => {
     const isAuth = !!user;
-    const listItems = [];
+    const listItems: NavItem[] = [];
 
     navItems.forEach(navItem => {
       if (!navItem.isAuthReq || (isAuth && navItem.isAuthReq)) {

@@ -48,7 +48,7 @@ const PlayerDataForm: FC<Props> = ({ onSave }) => {
         <DatePicker date={dob} setDate={(day, selectedDay) => setDob(day)} />
 
         <Button testid={tid.btnLoginSubmit} type='submit'>
-          Let's play
+          {`Let's play`}
         </Button>
       </div>
     </Form>
