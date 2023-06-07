@@ -17,7 +17,8 @@ import React, {
   useState,
   useContext,
   useEffect,
-  useCallback
+  useCallback,
+  FC
 } from 'react';
 import { auth } from '../firebase';
 import { DEFAULT, ToastData, UserModel } from '../data_models';
@@ -68,7 +69,11 @@ const AuthContext = createContext<AuthContextType>({
 
 let timeOut: any = null;
 
-export const AuthProvider = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const AuthProvider: FC<Props> = ({ children }) => {
   const [toast, setToast] = useState<{ open: boolean; data: ToastData | null }>(
     {
       open: false,
@@ -158,7 +163,7 @@ export const AuthProvider = ({ children }) => {
       country
     };
 
-    await Firestore.User.updateUser(user.uid, updatedUser);
+    await Firestore.User.updateUser(user!.uid, updatedUser);
     setUser(updatedUser);
     setLoading(false);
   };
