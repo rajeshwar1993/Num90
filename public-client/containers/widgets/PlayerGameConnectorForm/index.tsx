@@ -1,13 +1,11 @@
 import { FC } from 'react';
 import { useRouter } from 'next/navigation';
 import { PLAYER_GAME_PATH } from '../../../constants/fbConstants';
-import {
-  Button,
-  Form,
-  LoadingIcon,
-  SubHeading,
-  TextInput
-} from '../../../components';
+import { Form, LoadingIcon } from '../../../components';
+import { CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   gameID: string | undefined;
@@ -42,36 +40,38 @@ const PlayerGameConnectorForm: FC<Props> = ({ gameID, connectorID }) => {
   return (
     <div>
       <Form submitHandlerFunc={handleFormSubmit}>
-        <div className='flex flex-col items-center gap-y-4'>
-          <SubHeading>Connect to game</SubHeading>
-          <TextInput
-            required
-            label='Game ID'
-            type={'text'}
-            placeholder={'GAME ID'}
-            name={'gameID'}
-            id={'gameID'}
-            defaultValue={gameID}
-            disabled={!!gameID}
-            styleClasses='text-center tracking-widest !font-bold text-skin-accent'
-          />
-          <TextInput
-            required
-            label='Connector ID'
-            type={'text'}
-            placeholder={'CONNECTOR ID'}
-            name={'connectorID'}
-            id={'connectorID'}
-            defaultValue={connectorID}
-            styleClasses='text-center tracking-widest !font-bold text-skin-accent'
-          />
-          <Button
-            solid={true}
-            color='accent'
-            type='submit'
-            styleClasses='w-full'
-            size='lg'
-          >
+        <CardHeader className='space-y-1 pl-0'>
+          <CardTitle className='text-2xl'>Connect to game</CardTitle>
+        </CardHeader>
+        <div className='grid gap-4'>
+          <div className='grid gap-2'>
+            <Label htmlFor='gameID'>Game ID</Label>
+            <Input
+              required
+              type={'text'}
+              placeholder={'GAME ID'}
+              name={'gameID'}
+              id={'gameID'}
+              defaultValue={gameID}
+              disabled={!!gameID}
+              className='text-center tracking-widest font-bold text-accent'
+            />
+          </div>
+
+          <div className='grid gap-2'>
+            <Label htmlFor='gameID'>Connector ID</Label>
+            <Input
+              required
+              type={'text'}
+              placeholder={'CONNECTOR ID'}
+              name={'connectorID'}
+              id={'connectorID'}
+              defaultValue={connectorID}
+              className='text-center tracking-widest font-bold text-accent'
+            />
+          </div>
+
+          <Button type='submit' className='w-full'>
             GO
           </Button>
         </div>
