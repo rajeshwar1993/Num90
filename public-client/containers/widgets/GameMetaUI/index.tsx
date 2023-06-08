@@ -62,7 +62,7 @@ const GameMetaUI: FC<Props> = ({ gameMeta, saveGame, createNewGamePlay }) => {
     handleFor: 'logo' | 'bg',
     files: SelectedImage[]
   ) => {
-    let newImage = files[0];
+    let newImage = files ? files[0] : null;
     if (newImage === undefined) {
       newImage = null;
     }
@@ -143,15 +143,24 @@ const GameMetaUI: FC<Props> = ({ gameMeta, saveGame, createNewGamePlay }) => {
     const tagline = target.tagline.value; // typechecks!
     const ct = chosenTheme;
 
+    if (user === null) {
+      // TODO - handle error
+      return;
+    }
+
     let newLogo: Image | null = null;
     if (imageInputs.logo?.tempData) {
       let res = await Storage.Media.uploadMedia(
         'image',
         imageInputs.logo.tempData.file,
-        user?.uid,
+        user.uid,
         'gameLogo',
         gameMeta.uid
       );
+      if (res === null) {
+        // TODO - handle error
+        return;
+      }
       newLogo = {
         src: res.downloadUrl,
         alt: 'Logo',
@@ -165,10 +174,14 @@ const GameMetaUI: FC<Props> = ({ gameMeta, saveGame, createNewGamePlay }) => {
       let res = await Storage.Media.uploadMedia(
         'image',
         imageInputs.bgImage.tempData.file,
-        user?.uid,
+        user.uid,
         'gameBackground',
         gameMeta.uid
       );
+      if (res === null) {
+        // TODO - handle error
+        return;
+      }
       newBgImg = {
         src: res.downloadUrl,
         alt: 'Logo',

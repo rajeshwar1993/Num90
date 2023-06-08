@@ -1,13 +1,20 @@
 import clsx from 'clsx';
 import { GameMetaModel } from '../../../data_models';
-import Link from 'next/link';
-import { FC, useMemo } from 'react';
-import { Button, Para, SubHeading, TableView } from '../../../components';
+import { FC, useCallback, useMemo } from 'react';
+import { Para, SubHeading, TableView } from '../../../components';
 import ThemeDisplay from '../GameTheme';
 import { Icons } from '@/components/icons';
 import { GameEnv } from '@/constants/enums';
 import { Card } from '@/components/ui/card';
 import CreateNewGamePlay from './CreateNewGamePlay';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@radix-ui/react-tooltip';
+import { TableRow } from '@/components/Table';
 
 interface Props {
   gameMeta: GameMetaModel;
@@ -26,7 +33,7 @@ const GameMetaDisplay: FC<Props> = ({
   createNewGamePlay
 }) => {
   const tableData = useMemo(() => {
-    const data = {
+    const data: { headers: string[]; rows: TableRow[] } = {
       headers: ['Description', 'Prize Item', '', 'Quantity'],
       rows: []
     };
@@ -48,6 +55,14 @@ const GameMetaDisplay: FC<Props> = ({
     return data;
   }, [gameMeta.prizes]);
 
+  const editGame = useCallback(() => {
+    if (gameMeta.activeGames.length > 0) {
+      // TODO - handle error
+      return;
+    }
+    setEditMode();
+  }, [gameMeta.activeGames]);
+
   return (
     <div className={clsx('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-6')}>
       <Card className='p-4 flex justify-between items-start lg:items-start gap-4'>
@@ -63,7 +78,7 @@ const GameMetaDisplay: FC<Props> = ({
             <Para styleClasses='max-w-2xl'>{gameMeta.tagline}</Para>
           </div>
         </div>
-        <Button solid={true} color='accent' onClick={setEditMode}>
+        <Button size={'sm'} onClick={editGame}>
           Edit Game
         </Button>
       </Card>

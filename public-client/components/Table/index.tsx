@@ -10,14 +10,16 @@ import {
   TableRow
 } from '../ui/table';
 
+export interface TableRow {
+  id: string;
+  mark?: boolean;
+  cells: Array<React.ReactNode>;
+}
+
 interface Props {
   tableData: {
     headers: Array<React.ReactNode>;
-    rows: Array<{
-      id: string;
-      mark?: boolean;
-      cells: Array<React.ReactNode>;
-    }>;
+    rows: Array<TableRow>;
   };
 }
 

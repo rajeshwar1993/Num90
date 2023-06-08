@@ -52,21 +52,23 @@ const CreateNewGamePlay: FC<Props> = ({
     <>
       <div className='grid gap-4'>
         <SubHeading>Active Games</SubHeading>
-
-        <Button onClick={() => setShowForm(true)}>Start Game</Button>
-
+        {activeGames.length === 0 && (
+          <Button onClick={() => setShowForm(true)}>Start Game</Button>
+        )}
         {activeGames.length > 0 && (
-          <ul className='list-disc list-inside ml-6'>
+          <ul className=' list-inside ml-6'>
             {activeGames.map(ag => (
-              <li key={ag} className='text-skin-accent font-semibold mt-2'>
-                <Link href={`/game-play/${gameId}/${ag}`}>
-                  <span className='tracking-widest hover:underline underline-offset-4'>
-                    {ag}
-                  </span>{' '}
-                  {'(Click to open game)'}
-                </Link>
+              <li key={ag}>
+                <Button>
+                  <Link href={`/game-play/${gameId}/${ag}`}>
+                    <span className=''>
+                      Open game{' '}
+                      <span className='tracking-widest'>{`(${ag})`}</span>
+                    </span>
+                  </Link>
+                </Button>
                 <Link href={`/game-display/${gameId}/${ag}`}>
-                  <span className='block text-xs hover:underline underline-offset-2'>
+                  <span className='block mt-4 text-sm font-medium hover:underline underline-offset-2'>
                     open display screen
                   </span>
                 </Link>
