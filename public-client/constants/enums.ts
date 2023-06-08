@@ -11,3 +11,12 @@ export enum AuthModelState {
   SIGNUP = 'signup',
   FORGOT = 'forgot'
 }
+
+export enum GameEnv {
+  PubOrBar = 'Pub, Bar or Restaurant',
+  CoffeeShop = 'Coffee Shop',
+  HouseParty = 'House Party',
+  PrivateEvent = 'Private Function/Event',
+  OnlineEvent = 'Online Event',
+  Other = 'Other'
+}
