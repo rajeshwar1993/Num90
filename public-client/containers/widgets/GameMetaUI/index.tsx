@@ -12,11 +12,18 @@ import { SelectedImage } from '../FileInput/ImageInput';
 import { Storage } from '../../../core';
 import { themeOptions } from './themeOptions';
 import useAuth from '../../../app/AuthProvider';
+import { GameEnv } from '@/constants/enums';
 
 interface Props {
-  gameMeta: GameMetaModel | null;
+  gameMeta: GameMetaModel;
   saveGame: (updatedGame: GameMetaModel) => void;
-  createNewGamePlay: () => void;
+  createNewGamePlay: (
+    gameEnv: GameEnv,
+    city: string,
+    state: string,
+    country: string,
+    isFullGame: boolean
+  ) => void;
 }
 
 const GameMetaUI: FC<Props> = ({ gameMeta, saveGame, createNewGamePlay }) => {

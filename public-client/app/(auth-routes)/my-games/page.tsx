@@ -15,6 +15,7 @@ import { functions } from '../../../firebase';
 import { FF_CREATE_GAMEPLAY } from '../../../constants/fbConstants';
 import { useRouter } from 'next/navigation';
 import Routes from '../../../constants/routes';
+import { GameEnv } from '@/constants/enums';
 
 export default function Page() {
   const { user, loading: userLoading } = useAuth();
@@ -23,6 +24,10 @@ export default function Page() {
   const [selectedGame, setSelectedGame] = useState<GameMetaModel | null>(null);
 
   const createGame = async (newGameMetaModel: GameMetaModel) => {
+    if (user === null) {
+      // TODO - handle error
+      return;
+    }
     let updatedGameMeta = await Firestore.GameMeta.createGameMeta(
       user.uid,
       newGameMetaModel
@@ -32,6 +37,10 @@ export default function Page() {
     setSelectedGame(updatedGameMeta);
   };
   const fetchMyGames = useCallback(async () => {
+    if (user === null) {
+      // TODO - handle error
+      return;
+    }
     const games = await Firestore.GameMeta.getGamesByCreatorId(user.uid);
     setMyGames(games);
     if (games.length) setSelectedGame(games[0]);
@@ -51,7 +60,17 @@ export default function Page() {
     await Firestore.GameMeta.updateGameMeta(updatedGame.uid, updatedGame);
   };
 
-  const createNewGamePlay = async () => {
+  const createNewGamePlay = async (
+    gameEnv: GameEnv,
+    city: string,
+    state: string,
+    country: string,
+    isFullGame: boolean
+  ) => {
+    if (user === null || selectedGame === null) {
+      // TODO - handle error
+      return;
+    }
     //   // call firebase functo create game play
     const createGamelayFunc = httpsCallable<unknown, FunctionResponse>(
       functions,
@@ -60,7 +79,12 @@ export default function Page() {
     let res = await createGamelayFunc({
       userId: user.uid,
       gameUID: selectedGame.uid,
-      gameId: selectedGame.gameId
+      gameId: selectedGame.gameId,
+      gameEnv,
+      city,
+      state,
+      country,
+      isFullGame
     });
 
     if (res.data.error) {

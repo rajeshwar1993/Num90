@@ -16,7 +16,16 @@ import { getFreshBoard } from './helper';
 import TambolaTicket from './helper/ticket-generator';
 
 export const createGamePlay = async (
-  data: { gameUID: string; gameId: string; userId: string },
+  data: {
+    gameUID: string;
+    gameId: string;
+    userId: string;
+    gameEnv: string;
+    city: string;
+    state: string;
+    country: string;
+    isFullGame: boolean;
+  },
   context: functions.https.CallableContext
 ) => {
   const res: FunctionResponse = {
@@ -25,9 +34,19 @@ export const createGamePlay = async (
     message: null
   };
 
-  let { gameUID, gameId, userId } = data;
+  let { gameUID, gameId, userId, gameEnv, city, state, country, isFullGame } =
+    data;
   // check for userId and Game Id
-  if (!gameUID || !gameId || !userId) {
+  if (
+    !gameUID ||
+    !gameId ||
+    !userId ||
+    !gameEnv ||
+    !city ||
+    !state ||
+    !country ||
+    isFullGame === undefined
+  ) {
     res.error = true;
     res.message = 'Invalid arguments';
     return res;
@@ -112,6 +131,11 @@ export const createGamePlay = async (
     players: {},
     tickets: {},
     prizes,
+    gameEnv,
+    city,
+    state,
+    country,
+    isFullGame,
     createdTS: '',
     startTS: '',
     modifiedTS: '',

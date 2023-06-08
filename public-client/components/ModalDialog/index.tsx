@@ -48,7 +48,7 @@ const ModalDialog: FC<Props> = ({ open, closeModal, children }) => {
                     'relative',
                     'inline-block',
                     'max-w-sm',
-                    'min-w-[300px]',
+                    'min-w-[356px]',
                     'md:max-w-xl',
                     'md:min-w-[400px]',
                     'lg:max-w-3xl',

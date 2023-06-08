@@ -5,11 +5,20 @@ import { FC, useMemo } from 'react';
 import { Button, Para, SubHeading, TableView } from '../../../components';
 import ThemeDisplay from '../GameTheme';
 import { Icons } from '@/components/icons';
+import { GameEnv } from '@/constants/enums';
+import { Card } from '@/components/ui/card';
+import CreateNewGamePlay from './CreateNewGamePlay';
 
 interface Props {
-  gameMeta: GameMetaModel | null;
+  gameMeta: GameMetaModel;
   setEditMode: () => void;
-  createNewGamePlay: () => void;
+  createNewGamePlay: (
+    gameEnv: GameEnv,
+    city: string,
+    state: string,
+    country: string,
+    isFullGame: boolean
+  ) => void;
 }
 const GameMetaDisplay: FC<Props> = ({
   gameMeta,
@@ -29,7 +38,7 @@ const GameMetaDisplay: FC<Props> = ({
         cells: [
           prize.desc,
           prize.item,
-          <Icons.close className='h-4 w-4' />,
+          <Icons.close key={prize.id} className='h-4 w-4' />,
           prize.quantity
         ]
       };
@@ -40,28 +49,10 @@ const GameMetaDisplay: FC<Props> = ({
   }, [gameMeta.prizes]);
 
   return (
-    <div className={clsx('grid', 'grid-cols-1', 'gap-6')}>
-      {false && !gameMeta.isPremium && (
-        <div className='flex items-center gap-x-4 text-skin-error font-semibold p-2 border rounded-lg border-skin-error'>
-          <div className='text-6xl'>!</div>
-          <div>
-            <div>
-              Your account is currently in Trial Mode. Max tickets allowed is 15
-              per game.
-            </div>
-            <div>
-              <Link href='/'>
-                <span className='underline underline-offset-1'>Click here</span>
-              </Link>{' '}
-              to subcribe to Full Game Mode.
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className='flex justify-between items-start lg:items-start gap-4'>
+    <div className={clsx('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-6')}>
+      <Card className='p-4 flex justify-between items-start lg:items-start gap-4'>
         <div>
-          <span className='text-xs'>May 23rd. 2023</span>
+          <small className='text-xs'>May 23rd. 2023</small>
           <div className='flex flex-col gap-y-2 items-start'>
             <h1 className='text-2xl lg:text-5xl font-semibold w-full max-w-[200px] md:max-w-2xl'>
               {gameMeta.title}
@@ -75,45 +66,23 @@ const GameMetaDisplay: FC<Props> = ({
         <Button solid={true} color='accent' onClick={setEditMode}>
           Edit Game
         </Button>
-      </div>
-      <div className='mt-6'>
-        <div className='flex gap-x-4'>
-          <SubHeading>Active Games</SubHeading>
-          <Button solid={true} color='accent' onClick={createNewGamePlay}>
-            Create New Game Play
-          </Button>
-        </div>
-        {gameMeta.activeGames.length > 0 && (
-          <ul className='list-disc list-inside ml-6'>
-            {gameMeta.activeGames.map(ag => (
-              <li key={ag} className='text-skin-accent font-semibold mt-2'>
-                <Link href={`/game-play/${gameMeta.gameId}/${ag}`}>
-                  <span className='tracking-widest hover:underline underline-offset-4'>
-                    {ag}
-                  </span>{' '}
-                  {'(Click to open game)'}
-                </Link>
-                <Link href={`/game-display/${gameMeta.gameId}/${ag}`}>
-                  <span className='block text-xs hover:underline underline-offset-2'>
-                    open display screen
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-        {gameMeta.activeGames.length === 0 && <Para>No active gameplays.</Para>}
-      </div>
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-x-10 gap-y-4'>
-        <div className='col-span-1'>
-          <ThemeDisplay theme={gameMeta.theme} />
-        </div>
-        <div className='col-span-1'>
-          <SubHeading styleClasses='mb-2'>Prizes</SubHeading>
-          <TableView tableData={tableData} />
-          {tableData.rows.length === 0 && <Para>No prizes added yet.</Para>}
-        </div>
-      </div>
+      </Card>
+      <Card className='p-4'>
+        <CreateNewGamePlay
+          gameId={gameMeta.gameId}
+          activeGames={gameMeta.activeGames}
+          createNewGamePlay={createNewGamePlay}
+        />
+      </Card>
+
+      <Card className='p-4 col-span-1'>
+        <ThemeDisplay theme={gameMeta.theme} />
+      </Card>
+      <Card className='p-4 col-span-1'>
+        <SubHeading styleClasses='mb-2'>Prizes</SubHeading>
+        <TableView tableData={tableData} />
+        {tableData.rows.length === 0 && <Para>No prizes added yet.</Para>}
+      </Card>
     </div>
   );
 };

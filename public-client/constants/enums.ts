@@ -1,3 +1,5 @@
+import { SimpleSelectOption } from '@/components/SimpleSelect';
+
 export enum GameState {
   NOT_STARTED,
   STARTED,
@@ -13,10 +15,37 @@ export enum AuthModelState {
 }
 
 export enum GameEnv {
-  PubOrBar = 'Pub, Bar or Restaurant',
-  CoffeeShop = 'Coffee Shop',
-  HouseParty = 'House Party',
-  PrivateEvent = 'Private Function/Event',
-  OnlineEvent = 'Online Event',
-  Other = 'Other'
+  PubOrBar = 'PB',
+  CoffeeShop = 'CS',
+  HouseParty = 'HP',
+  PrivateEvent = 'PE',
+  OnlineEvent = 'OE',
+  Other = 'Oth'
 }
+
+export const GameEnvOpts: SimpleSelectOption[] = [
+  {
+    display: 'Pub, Bar or Restaurant',
+    value: GameEnv.PubOrBar
+  },
+  {
+    display: 'Coffee Shop',
+    value: GameEnv.CoffeeShop
+  },
+  {
+    display: 'House Party',
+    value: GameEnv.HouseParty
+  },
+  {
+    display: 'Private Function/Event',
+    value: GameEnv.PrivateEvent
+  },
+  {
+    display: 'Online Event',
+    value: GameEnv.OnlineEvent
+  },
+  {
+    display: 'Other',
+    value: GameEnv.Other
+  }
+];

@@ -17,7 +17,7 @@ export interface SimpleSelectOption {
 }
 
 interface Props {
-  className: string;
+  className?: string;
   name: string;
   label?: string;
   options: Array<SimpleSelectOption>;
@@ -30,7 +30,7 @@ interface Props {
 }
 
 const SimpleSelect: FC<Props> = ({
-  className,
+  className = '',
   name,
   label,
   options,
@@ -55,7 +55,7 @@ const SimpleSelect: FC<Props> = ({
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {label && <SelectLabel>Fruits</SelectLabel>}
+          {label && <SelectLabel>{label}</SelectLabel>}
           {options.map(op => (
             <SelectItem key={op.value} value={op.value}>
               {op.display}
