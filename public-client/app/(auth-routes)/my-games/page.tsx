@@ -22,6 +22,8 @@ export default function Page() {
   const router = useRouter();
   const [myGames, setMyGames] = useState<Array<GameMetaModel>>([]);
   const [selectedGame, setSelectedGame] = useState<GameMetaModel | null>(null);
+  const [loadingCreateGameplay, setLoadingCreateGamePlay] =
+    useState<boolean>(false);
 
   const createGame = async (newGameMetaModel: GameMetaModel) => {
     if (user === null) {
@@ -67,8 +69,11 @@ export default function Page() {
     country: string,
     isFullGame: boolean
   ) => {
+    setLoadingCreateGamePlay(true);
+
     if (user === null || selectedGame === null) {
       // TODO - handle error
+      setLoadingCreateGamePlay(false);
       return;
     }
     //   // call firebase functo create game play
@@ -88,7 +93,8 @@ export default function Page() {
     });
 
     if (res.data.error) {
-      // throw error
+      // TODO - handle error
+      setLoadingCreateGamePlay(false);
       return;
     }
 
@@ -102,6 +108,7 @@ export default function Page() {
         selectedGame.uid === myGame.uid ? gameMeta : myGame
       )
     );
+    setLoadingCreateGamePlay(false);
   };
 
   useEffect(() => {
@@ -156,6 +163,7 @@ export default function Page() {
             <GameMetaUI
               gameMeta={selectedGame}
               saveGame={saveGame}
+              loadingCreateGameplay={loadingCreateGameplay}
               createNewGamePlay={createNewGamePlay}
             />
           </div>

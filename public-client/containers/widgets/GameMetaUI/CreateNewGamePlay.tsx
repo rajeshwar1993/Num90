@@ -20,12 +20,14 @@ interface Props {
     country: string,
     isFullGame: boolean
   ) => void;
+  loadingCreateGameplay: boolean;
 }
 
 const CreateNewGamePlay: FC<Props> = ({
   gameId,
   activeGames,
-  createNewGamePlay
+  createNewGamePlay,
+  loadingCreateGameplay
 }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [isFullGameFlag, setIsFullGameFlag] = useState<boolean>(false);
@@ -51,12 +53,17 @@ const CreateNewGamePlay: FC<Props> = ({
   return (
     <>
       <div className='grid gap-4'>
-        <SubHeading>Active Games</SubHeading>
+        <SubHeading>Active Game</SubHeading>
         {activeGames.length === 0 && (
-          <Button onClick={() => setShowForm(true)}>Start Game</Button>
+          <Button
+            onClick={() => setShowForm(true)}
+            loading={loadingCreateGameplay}
+          >
+            Start Game
+          </Button>
         )}
         {activeGames.length > 0 && (
-          <ul className=' list-inside ml-6'>
+          <ul className=' list-inside'>
             {activeGames.map(ag => (
               <li key={ag}>
                 <Button>

@@ -8,12 +8,6 @@ import { GameEnv } from '@/constants/enums';
 import { Card } from '@/components/ui/card';
 import CreateNewGamePlay from './CreateNewGamePlay';
 import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@radix-ui/react-tooltip';
 import { TableRow } from '@/components/Table';
 
 interface Props {
@@ -26,11 +20,13 @@ interface Props {
     country: string,
     isFullGame: boolean
   ) => void;
+  loadingCreateGameplay: boolean;
 }
 const GameMetaDisplay: FC<Props> = ({
   gameMeta,
   setEditMode,
-  createNewGamePlay
+  createNewGamePlay,
+  loadingCreateGameplay
 }) => {
   const tableData = useMemo(() => {
     const data: { headers: string[]; rows: TableRow[] } = {
@@ -57,15 +53,15 @@ const GameMetaDisplay: FC<Props> = ({
 
   const editGame = useCallback(() => {
     if (gameMeta.activeGames.length > 0) {
-      // TODO - handle error
+      // TODO - handle error - show it can't be edited
       return;
     }
     setEditMode();
   }, [gameMeta.activeGames]);
 
   return (
-    <div className={clsx('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-6')}>
-      <Card className='p-4 flex justify-between items-start lg:items-start gap-4'>
+    <div className={clsx('grid', 'grid-cols-1', 'md:grid-cols-4', 'gap-6')}>
+      <Card className='p-4 flex justify-between items-start lg:items-start gap-4 col-span-3'>
         <div>
           <small className='text-xs'>May 23rd. 2023</small>
           <div className='flex flex-col gap-y-2 items-start'>
@@ -82,18 +78,19 @@ const GameMetaDisplay: FC<Props> = ({
           Edit Game
         </Button>
       </Card>
-      <Card className='p-4'>
+      <Card className='p-4 col-span-1'>
         <CreateNewGamePlay
           gameId={gameMeta.gameId}
           activeGames={gameMeta.activeGames}
           createNewGamePlay={createNewGamePlay}
+          loadingCreateGameplay={loadingCreateGameplay}
         />
       </Card>
 
-      <Card className='p-4 col-span-1'>
+      <Card className='p-4 col-span-2'>
         <ThemeDisplay theme={gameMeta.theme} />
       </Card>
-      <Card className='p-4 col-span-1'>
+      <Card className='p-4 col-span-2'>
         <SubHeading styleClasses='mb-2'>Prizes</SubHeading>
         <TableView tableData={tableData} />
         {tableData.rows.length === 0 && <Para>No prizes added yet.</Para>}

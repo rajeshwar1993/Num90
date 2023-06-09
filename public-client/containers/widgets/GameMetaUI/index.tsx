@@ -17,6 +17,7 @@ import { GameEnv } from '@/constants/enums';
 interface Props {
   gameMeta: GameMetaModel;
   saveGame: (updatedGame: GameMetaModel) => void;
+  loadingCreateGameplay: boolean;
   createNewGamePlay: (
     gameEnv: GameEnv,
     city: string,
@@ -26,7 +27,12 @@ interface Props {
   ) => void;
 }
 
-const GameMetaUI: FC<Props> = ({ gameMeta, saveGame, createNewGamePlay }) => {
+const GameMetaUI: FC<Props> = ({
+  gameMeta,
+  saveGame,
+  createNewGamePlay,
+  loadingCreateGameplay
+}) => {
   const { user } = useAuth();
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -245,6 +251,7 @@ const GameMetaUI: FC<Props> = ({ gameMeta, saveGame, createNewGamePlay }) => {
       <GameMetaDisplay
         gameMeta={gameMeta}
         setEditMode={setEditMode}
+        loadingCreateGameplay={loadingCreateGameplay}
         createNewGamePlay={createNewGamePlay}
       />
     );
