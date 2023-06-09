@@ -253,7 +253,10 @@ const Nav: FC<Props> = ({}) => {
           {user !== null && (
             <UserAvatar
               signout={signout}
-              userData={{ name: user.name || '', image: user.profileImg }}
+              userData={{
+                name: user.name || '',
+                image: user.profileImg || undefined
+              }}
             />
           )}
           {/* middle nav for mobile */}

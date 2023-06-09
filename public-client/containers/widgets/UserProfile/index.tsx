@@ -1,7 +1,5 @@
 import { UserModel } from '../../../data_models';
 import { FC } from 'react';
-import CustImage from '../CustImage';
-import logo from '../../../public/images/logo.png';
 import { Button, Para, SubHeading } from '../../../components';
 import { CheckCircledIcon } from '@radix-ui/react-icons';
 import AvatarComp from '../Avatar';
@@ -15,7 +13,7 @@ const UserProfile: FC<Props> = ({ user }) => {
     <div className='flex flex-col lg:flex-row justify-center items-center gap-x-36 gap-y-7'>
       <div className='max-w-xs min-w-[320px] border border-skin-primary rounded-lg p-4 flex flex-col items-center justify-center gap-y-4'>
         <AvatarComp
-          image={user.profileImg}
+          image={user.profileImg ?? undefined}
           name={user.name}
           isOnProfileScreen={true}
         />

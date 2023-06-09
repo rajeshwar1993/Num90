@@ -175,7 +175,7 @@ const PhoneVerificationForm: React.FC<Props> = ({ title = '' }) => {
   };
 
   const createAccountWithPhoneNumber = (code: string) => {
-    cr.confirm(code).then(result => {
+    cr.confirm(code).then((result: any) => {
       console.log(result.user);
     });
   };

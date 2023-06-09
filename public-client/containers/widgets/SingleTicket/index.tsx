@@ -33,8 +33,8 @@ const SingleTicket: FC<Props> = ({
     let arr: Array<TicketCell[]> = [];
 
     Object.values(ticket.cells).forEach(row => {
-      let arRow = [];
-      Object.values(row).forEach(cell => {
+      let arRow: any[] = [];
+      Object.values(row).forEach((cell: any) => {
         arRow.push(cell);
       });
       arr.push(arRow);

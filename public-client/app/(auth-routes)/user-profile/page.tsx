@@ -1,14 +1,16 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useRouter } from 'next/navigation';
 import useAuth from '../../AuthProvider';
 import Routes from '../../../constants/routes';
 import UserProfile from '../../../containers/widgets/UserProfile';
 
-const Page: FC<{ params: { connectorID: string; gameID: string } }> = ({
+export default function Page({
   params
-}) => {
+}: {
+  params: { connectorID: string; gameID: string };
+}) {
   const { user, loading: userLoading } = useAuth();
   const router = useRouter();
 
@@ -17,9 +19,7 @@ const Page: FC<{ params: { connectorID: string; gameID: string } }> = ({
   } else if (userLoading === false && user === null) {
     router.replace(Routes.home);
     return <></>;
+  } else if (user !== null) {
+    return <UserProfile user={user} />;
   }
-
-  return <UserProfile user={user} />;
-};
-
-export default Page;
+}

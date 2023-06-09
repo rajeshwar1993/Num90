@@ -1,14 +1,12 @@
 import { GameMetaModel } from '../../data_models';
 import {
   DocumentData,
-  QueryDocumentSnapshot,
+  DocumentSnapshot,
   SnapshotOptions
 } from 'firebase/firestore';
 import { GameMetaKeys } from '../../constants/dbKeys';
 
 export const gameMeta_ToDB = (gameMeta: GameMetaModel): DocumentData => {
-  delete gameMeta.uid;
-
   return gameMeta;
 };
 
@@ -25,7 +23,7 @@ export const gameMeta_ToDBUpdate = (gameMeta: GameMetaModel): DocumentData => {
 };
 
 export const gameMeta_fromDB = (
-  snapshot: QueryDocumentSnapshot,
+  snapshot: DocumentSnapshot,
   options: SnapshotOptions
 ): GameMetaModel => {
   const data = snapshot.data(options)!;

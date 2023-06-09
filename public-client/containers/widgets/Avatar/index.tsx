@@ -10,7 +10,7 @@ interface Props {
 }
 
 const AvatarComp: FC<Props> = ({
-  image = null,
+  image,
   name = 'U',
   isOnProfileScreen = false
 }) => (
@@ -32,7 +32,7 @@ const AvatarComp: FC<Props> = ({
   >
     <Avatar.Image
       className='h-full w-full rounded-[inherit] object-cover'
-      src={image ? image.src : null}
+      src={image?.src}
       alt='User'
     />
     <Avatar.Fallback

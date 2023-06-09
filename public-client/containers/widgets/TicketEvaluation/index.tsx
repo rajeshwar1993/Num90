@@ -1,6 +1,6 @@
 import { Player, Prize, Ticket } from '../../../data_models';
 import { FC, ReactNode, useMemo } from 'react';
-import { AccordionComp, Button, SubHeading } from '../../../components';
+import { AccordionComp, SubHeading } from '../../../components';
 import SingleTicket from '../SingleTicket';
 
 interface Props {
@@ -38,12 +38,12 @@ const TicketEvaluations: FC<Props> = ({
     prize: Prize | null
   ) => {
     return (
-      <div className='flex gap-x-12 items-center  py-2'>
+      <div className='flex gap-x-12 items-center py-2'>
         <div className='flex flex-col gap-y-1 items-start border-r pr-6 border-skin-primary'>
           <span className='text-xs font-semibold'>{playerId}</span>
           <span>{playerName}</span>
         </div>
-        <span className='font-bold'>{prize.desc}</span>
+        <span className='font-bold'>{prize ? prize.desc : ''}</span>
       </div>
     );
   };
@@ -98,10 +98,7 @@ const TicketEvaluations: FC<Props> = ({
 
   return (
     <div>
-      <div className='mb-4 flex gap-x-4 items-center'>
-        <SubHeading>Evaluation</SubHeading>
-      </div>
-
+      <SubHeading>Evaluation</SubHeading>
       <div>{evalData}</div>
     </div>
   );

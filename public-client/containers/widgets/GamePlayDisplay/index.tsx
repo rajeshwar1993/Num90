@@ -7,10 +7,11 @@ import { FC, useMemo } from 'react';
 import clsx from 'clsx';
 import useGamePlayDisplay from './useGamePlayDisplay';
 import { GameState } from '@/constants/enums';
-import { Heading, Para, SubHeading, Table } from '../../../components';
+import { Heading, Para, SubHeading, TableView } from '../../../components';
 import QRCode from 'react-qr-code';
 import CustImage from '../CustImage';
 import logo from '../../../public/images/logo.png';
+import { TableRow } from '@/components/Table';
 
 interface Props {
   gameID: string;
@@ -21,7 +22,7 @@ const GamePlayDisplay: FC<Props> = ({ gameID, gamePlay }) => {
   const { gameState, prizes, lastNums } = useGamePlayDisplay(gameID, gamePlay);
 
   const tableData = useMemo(() => {
-    const data = {
+    const data: { headers: string[]; rows: TableRow[] } = {
       headers: ['Description', 'Prize Item', '', 'Quantity'],
       rows: []
     };
@@ -165,7 +166,7 @@ const GamePlayDisplay: FC<Props> = ({ gameID, gamePlay }) => {
                 <span className='block font-semibold text-2xl mb-2'>
                   Prizes
                 </span>
-                <Table tableData={tableData} />
+                <TableView tableData={tableData} />
               </div>
               <div className='mt-6 grid grid-cols-2'>
                 <div>

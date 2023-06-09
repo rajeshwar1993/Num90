@@ -155,6 +155,12 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     country: string
   ) => {
     setLoading(true);
+
+    if (user === null) {
+      // TODO - handle error
+      return;
+    }
+
     const updatedUser: UserModel = {
       ...user,
       name,

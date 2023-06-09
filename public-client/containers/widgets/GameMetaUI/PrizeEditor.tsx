@@ -1,7 +1,11 @@
 import { Prize } from '../../../data_models';
-import { FC, useMemo, useState } from 'react';
-import { Button, Table, TextInput } from '../../../components';
+import { FC, useMemo } from 'react';
+import { TableView } from '../../../components';
 import { TrashIcon } from '@radix-ui/react-icons';
+import { Button } from '@/components/ui/button';
+import { TableRow } from '@/components/Table';
+import { Input } from '@/components/ui/input';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
 interface Props {
   prizes: Prize[];
@@ -21,7 +25,7 @@ const PrizeEditor: FC<Props> = ({
   handleUpdate
 }) => {
   const tableData = useMemo(() => {
-    const data = {
+    const data: { headers: string[]; rows: TableRow[] } = {
       headers: ['Description', 'Prize Item', '', 'Quantity', ''],
       rows: []
     };
@@ -30,35 +34,35 @@ const PrizeEditor: FC<Props> = ({
       let row = {
         id: p.id,
         cells: [
-          <TextInput
+          <Input
+            required
             id={`${p.id}_desc`}
+            key={`${p.id}_desc`}
             name='desc[]'
             defaultValue={p.desc}
-            styleClasses='min-w-[200px] md:min-w-[350px]'
+            className='min-w-[200px] md:min-w-[350px]'
             onChange={e => handleUpdate(e.target.value, p.id, 'desc')}
           />,
-          <TextInput
+          <Input
+            required
             id={`${p.id}_item`}
+            key={`${p.id}_item`}
             name='item[]'
             defaultValue={p.item}
-            styleClasses='min-w-[100px]'
+            className='min-w-[100px]'
             onChange={e => handleUpdate(e.target.value, p.id, 'item')}
           />,
-          'x',
-          <TextInput
+          <Cross2Icon key={`${p.id}_cross`} height={20} width={20} />,
+          <Input
+            required
             id={`${p.id}_quantity`}
+            key={`${p.id}_quantity`}
             name='quantity[]'
-            type={'number'}
             defaultValue={p.quantity}
-            styleClasses='w-16'
+            className='w-16'
             onChange={e => handleUpdate(e.target.value, p.id, 'quantity')}
           />,
-          <Button
-            onlyIcon={true}
-            solid={true}
-            color='error'
-            onClick={() => deleteRow(p)}
-          >
+          <Button key={`${p.id}_del`} onClick={() => deleteRow(p)}>
             <TrashIcon />
           </Button>
         ]
@@ -69,7 +73,7 @@ const PrizeEditor: FC<Props> = ({
     data.rows.push({
       id: 'add',
       cells: [
-        <Button solid={true} color='accent' onClick={addNewRow}>
+        <Button key={`add`} onClick={addNewRow}>
           Add New Row
         </Button>,
         '',
@@ -84,7 +88,7 @@ const PrizeEditor: FC<Props> = ({
 
   return (
     <div className='overflow-x-auto'>
-      <Table tableData={tableData} />
+      <TableView tableData={tableData} />
     </div>
   );
 };

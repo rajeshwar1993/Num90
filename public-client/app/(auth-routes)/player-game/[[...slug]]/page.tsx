@@ -17,9 +17,9 @@ export default function Page({ params }: { params: { slug: string[] } }) {
   } else if (userLoading === false && user === null) {
     router.replace(JOIN_GAME_PATH(gameID, connectorID));
     return <></>;
+  } else if (user !== null) {
+    return (
+      <PlayerGameScreen user={user} gameID={gameID} connectorID={connectorID} />
+    );
   }
-
-  return (
-    <PlayerGameScreen user={user} gameID={gameID} connectorID={connectorID} />
-  );
 }

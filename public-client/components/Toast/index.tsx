@@ -1,6 +1,6 @@
-import React, { FC, Fragment, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import * as RadixToast from '@radix-ui/react-toast';
-import { ToastData } from 'models';
+import { ToastData } from '../../data_models';
 import clsx from 'clsx';
 
 type Props = {
