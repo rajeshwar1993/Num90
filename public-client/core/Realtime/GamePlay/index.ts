@@ -40,6 +40,11 @@ export const fetchGame = async (gamePlayId: string, connectorId: string) => {
     createdTS: data.createdTS,
     lastFewNumbers: data.lastFewNumbers || [],
     players: data.players || {},
+    gameEnv: data.gameEnv,
+    city: data.city || '',
+    state: data.state || '',
+    country: data.country || '',
+    isFullGame: data.isFullGame,
     tickets: data.ticket || {},
     prizes: data.prizes || [],
     gameMeta: data.gameMeta

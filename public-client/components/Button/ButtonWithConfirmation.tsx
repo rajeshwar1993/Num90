@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { getColorClass, getSizeClass } from './utils';
 import { useState } from 'react';
-import Button from '.';
 import { Cross2Icon, CheckIcon } from '@radix-ui/react-icons';
+import { Button } from '../ui/button';
 
 interface Props {
   type?: 'button' | 'submit' | 'reset';
@@ -10,11 +10,7 @@ interface Props {
   styleClasses?: string;
   disabled?: boolean;
   loading?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'primary' | 'accent' | 'error';
-  look?: 'button' | 'link';
-  solid?: boolean;
-  onlyIcon?: boolean;
+  size?: 'default' | 'sm' | 'lg' | null | undefined;
   testid?: string;
   children: React.ReactNode;
 }
@@ -25,11 +21,7 @@ const ButtonWithConfirmation: React.FC<Props> = ({
   styleClasses = '',
   disabled = false,
   loading = false,
-  size = 'md',
-  color = 'primary',
-  look = 'button',
-  solid = false,
-  onlyIcon = false,
+  size = 'default',
   // icon = null,
   testid = '',
   onClick = () => {},
@@ -41,20 +33,10 @@ const ButtonWithConfirmation: React.FC<Props> = ({
     return (
       <div className='grid grid-cols-2 gap-2 justify-items-center'>
         <span className='col-span-2'>Are you sure?</span>
-        <Button
-          type='button'
-          onClick={() => setShowConfirm(false)}
-          onlyIcon={true}
-        >
+        <Button type='button' size={'sm'} onClick={() => setShowConfirm(false)}>
           <Cross2Icon />
         </Button>
-        <Button
-          type={type}
-          onClick={onClick}
-          color='accent'
-          solid={true}
-          onlyIcon={true}
-        >
+        <Button type={type} size={'sm'} onClick={onClick}>
           <CheckIcon />
         </Button>
       </div>
@@ -62,32 +44,17 @@ const ButtonWithConfirmation: React.FC<Props> = ({
   }
 
   return (
-    <button
+    <Button
       {...props}
       data-testid={testid}
-      className={clsx(
-        'inline-block',
-        'leading-tight',
-        look === 'button' ? 'uppercase' : 'capitalize',
-        look === 'button' ? 'font-medium' : 'font-semibold',
-        'rounded-lg',
-        'focus:outline-none',
-        'focus:ring-0',
-        look === 'button' && 'active:shadow-lg hover:shadow-lg focus:shadow-lg',
-        'transition',
-        'duration-150',
-        'ease-in-out',
-        'tracking-wide',
-        getColorClass(color, solid, disabled || loading, look === 'link'),
-        getSizeClass(size, onlyIcon, look === 'link'),
-        styleClasses
-      )}
+      className={clsx(styleClasses)}
       type={'button'}
       onClick={() => setShowConfirm(true)}
       disabled={disabled || loading}
+      size={size}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 

@@ -1,11 +1,7 @@
 import { FC } from 'react';
 import { GameState } from '../../../constants/enums';
-import {
-  Button,
-  ButtonWithConfirmation,
-  Heading,
-  SubHeading
-} from '../../../components';
+import { ButtonWithConfirmation } from '../../../components';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   title: string;
@@ -42,37 +38,17 @@ const GameControls: FC<Props> = ({
         {title}
       </h1>
       <div className='grid grid-cols-2 gap-2'>
-        <Button
-          size='sm'
-          solid={true}
-          color='accent'
-          onClick={startGame}
-          disabled={!isStartGameEnabled}
-        >
+        <Button size='sm' onClick={startGame} disabled={!isStartGameEnabled}>
           start
         </Button>
-        <Button
-          size='sm'
-          solid={true}
-          color='accent'
-          onClick={pauseGame}
-          disabled={!isPauseGameEnabled}
-        >
+        <Button size='sm' onClick={pauseGame} disabled={!isPauseGameEnabled}>
           pause
         </Button>
-        <Button
-          size='sm'
-          solid={true}
-          color='accent'
-          onClick={resumeGame}
-          disabled={!isResumeGameEnabled}
-        >
+        <Button size='sm' onClick={resumeGame} disabled={!isResumeGameEnabled}>
           resume
         </Button>
         <ButtonWithConfirmation
           size='sm'
-          solid={true}
-          color='accent'
           onClick={endGame}
           disabled={!isEndGameEnabled}
         >

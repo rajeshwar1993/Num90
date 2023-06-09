@@ -23,10 +23,10 @@ const BoardCell: FC<Props> = ({ cell }) => {
         'flex',
         'justify-center',
         'items-center',
-        'text-skin-inverted',
+
         cell.isCalled === false
-          ? 'bg-skin-primary rounded-lg'
-          : 'bg-skin-accent rounded-full'
+          ? 'bg-primary text-primary-foreground rounded-lg'
+          : 'bg-accent text-accent-foreground rounded-full'
       )}
     >
       {cell.num}

@@ -47,7 +47,7 @@ const BingoBoard: FC<Props> = ({ gameState, board, generateNextNumber }) => {
   return (
     <div className='relative flex flex-col items-center justify-center p-4'>
       {gameStateMessage && (
-        <div className='absolute text-skin-inverted w-full h-full bg-skin-primary opacity-90 rounded-lg flex items-center justify-center'>
+        <div className='absolute text-primary w-full h-full bg-background/90 rounded-lg flex items-center justify-center'>
           <SubHeading>{gameStateMessage}</SubHeading>
         </div>
       )}

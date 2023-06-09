@@ -22,4 +22,5 @@ export const PLAYER_GAME_PATH = (gameId: string, connectorId: string) =>
 // FUNCTIONS
 export const FF_CREATE_GAMEPLAY = 'createGameplayFF';
 export const FF_APPROVE_REJECT_TICKET = 'approveRejectTicketRequestFF';
+export const FF_CONVERT_LIVE_GAME_TO_HISTORY = 'convertLiveGameToHistoryFF';
 export const FF_JOIN_GAME_OR_FETCH_EXISTING = 'joinGameOrFetchExistingFF';

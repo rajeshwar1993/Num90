@@ -14,7 +14,8 @@ import { DataSnapshot, onValue, ref } from 'firebase/database';
 import { functions, rdb } from '../../../firebase';
 import {
   GAME_PLAY_PATH,
-  FF_APPROVE_REJECT_TICKET
+  FF_APPROVE_REJECT_TICKET,
+  FF_CONVERT_LIVE_GAME_TO_HISTORY
 } from '../../../constants/fbConstants';
 import { GamePlayKeys } from '../../../constants/dbKeys';
 import useAuth from '../../../app/AuthProvider';
@@ -49,8 +50,28 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
   const resumeGame = () => {
     Realtime.GamePlay.resumeGame(gameID, gamePlay.gameConnectId);
   };
-  const endGame = () => {
-    Realtime.GamePlay.resumeGame(gameID, gamePlay.gameConnectId);
+  const endGame = async () => {
+    await Realtime.GamePlay.endGame(gameID, gamePlay.gameConnectId);
+
+    if (user === null) {
+      // TODO - handle error
+      return;
+    }
+
+    // call a FF that will process the live gamae and store it as game history
+    const func = httpsCallable<unknown, FunctionResponse>(
+      functions,
+      FF_CONVERT_LIVE_GAME_TO_HISTORY
+    );
+
+    await func({
+      gameUID: gamePlay.uid,
+      gameId: gameID,
+      connectorId: gamePlay.gameConnectId,
+      userId: user.uid
+    });
+
+    // redirect to my games
   };
 
   // bingo functions
@@ -89,6 +110,11 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
       noOfTickets: number,
       action: 'APPROVE' | 'REJECT'
     ) => {
+      if (user === null) {
+        // TODO - handle error
+        return;
+      }
+
       const func = httpsCallable<unknown, FunctionResponse>(
         functions,
         FF_APPROVE_REJECT_TICKET
@@ -105,7 +131,7 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
       });
 
       if (res.data.error) {
-        // throw error
+        // TODO - handle error
         return;
       }
       return true;

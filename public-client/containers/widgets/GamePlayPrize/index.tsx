@@ -1,6 +1,14 @@
 import { Player, Prize } from '../../../data_models';
 import { FC, useMemo } from 'react';
-import { SubHeading, Table, Tooltip } from '../../../components';
+import { SubHeading, TableView } from '../../../components';
+import { TableRow } from '@/components/Table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   prizes: Prize[];
@@ -9,7 +17,7 @@ interface Props {
 
 const GamePlayPrize: FC<Props> = ({ prizes, players }) => {
   const tableData = useMemo(() => {
-    const data = {
+    const data: { headers: string[]; rows: TableRow[] } = {
       headers: ['Description', 'Prize Item', '', 'Quantity', 'Winners'],
       rows: []
     };
@@ -21,12 +29,20 @@ const GamePlayPrize: FC<Props> = ({ prizes, players }) => {
       if (winnerArr.length) {
         winnerArr.forEach(playerID => {
           winnerList.push(
-            <Tooltip
-              label={`${players[playerID].name} (${players[playerID].playerId})`}
-              tooltip={`Ticket ID : ${prize.winnerPlayerId[playerID]}`}
-            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant='link' size={'sm'} className='text-xs'>
+                    {`${players[playerID].name} (${players[playerID].playerId})`}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{`Ticket : ${prize.winnerPlayerId[playerID]}`}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           );
-          winnerList.push(<span>{', '}</span>);
+          winnerList.push(<span> </span>);
         });
       }
 
@@ -44,7 +60,7 @@ const GamePlayPrize: FC<Props> = ({ prizes, players }) => {
   return (
     <div>
       <SubHeading styleClasses='mb-4'>Prizes</SubHeading>
-      <Table tableData={tableData} />
+      <TableView tableData={tableData} />
     </div>
   );
 };
