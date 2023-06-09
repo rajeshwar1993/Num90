@@ -54,7 +54,7 @@ const GameMetaDisplay: FC<Props> = ({
   const editGame = useCallback(() => {
     if (gameMeta.activeGames.length > 0) {
       // TODO - handle error - show it can't be edited
-      return;
+      throw Error('Cannot edit game.');
     }
     setEditMode();
   }, [gameMeta.activeGames]);
