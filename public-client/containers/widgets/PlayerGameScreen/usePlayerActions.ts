@@ -18,10 +18,11 @@ import {
 } from '../../../constants/fbConstants';
 import { GamePlayKeys } from '../../../constants/dbKeys';
 
-let playerChanges;
-let ticketListeners = [];
-
-export default function (gameID: string, connectorID: string, user: UserModel) {
+const usePlayerActions = (
+  gameID: string,
+  connectorID: string,
+  user: UserModel
+) => {
   const [gameState, setGameState] = useState<GameState>(GameState.NOT_STARTED);
   const [gameJoinStatus, setGameJoinStatus] = useState<
     'NOT_FOUND' | 'FOUND' | 'SEARCHING' | 'JOINED'
@@ -34,7 +35,7 @@ export default function (gameID: string, connectorID: string, user: UserModel) {
   const [tickets, setTickets] = useState<{ [uid: string]: Ticket }>({});
 
   const checkIfGameExists = useCallback(
-    async (gameID, connectorID) => {
+    async (gameID: string, connectorID: string) => {
       const res: false | GameMetaGlanceModel =
         await Realtime.GamePlay.checkGameExists(gameID, connectorID);
       if (res) {
@@ -93,6 +94,11 @@ export default function (gameID: string, connectorID: string, user: UserModel) {
   };
 
   const requestForTickets = async (noOfTickets: number) => {
+    if (player === null) {
+      // TODO - handle error
+      return;
+    }
+
     await Realtime.GamePlay.requestForTickets(
       gameID,
       connectorID,
@@ -118,6 +124,10 @@ export default function (gameID: string, connectorID: string, user: UserModel) {
   };
 
   const raiseForEvaluation = async (ticketId: string, prizeId: string) => {
+    if (player === null) {
+      // TODO - handle error
+      return;
+    }
     await Realtime.GamePlay.raiseForEvaluation(
       gameID,
       connectorID,
@@ -158,7 +168,7 @@ export default function (gameID: string, connectorID: string, user: UserModel) {
           player.uid
         }`
       );
-      playerChanges = onValue(playerRef, handlePlayerChanges);
+      onValue(playerRef, handlePlayerChanges);
     }
   }, [player?.uid]);
 
@@ -174,7 +184,7 @@ export default function (gameID: string, connectorID: string, user: UserModel) {
             GamePlayKeys.tickets
           }/${ticketKey}`
         );
-        ticketListeners.push(onValue(ticketRef, handleTicketChanges));
+        onValue(ticketRef, handleTicketChanges);
       });
     }
   }, [player?.uid, player?.ticketsIDs]);
@@ -191,4 +201,6 @@ export default function (gameID: string, connectorID: string, user: UserModel) {
     markTicketNum,
     raiseForEvaluation
   };
-}
+};
+
+export default usePlayerActions;

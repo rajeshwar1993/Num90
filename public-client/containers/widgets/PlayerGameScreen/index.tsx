@@ -1,12 +1,13 @@
 import { UserModel } from '../../../data_models';
 import { FC, useMemo } from 'react';
 import usePlayerActions from './usePlayerActions';
-import { Button, LoadingIcon, Para, SubHeading } from '../../../components';
+import { LoadingIcon, Para, SubHeading } from '../../../components';
 import Link from 'next/link';
 import Routes from '../../../constants/routes';
 import PlayArea from './PlayArea';
 import QuickGameGlance from '../GameMetaUI/QuickGameGlance';
 import { GameState } from '../../../constants/enums';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   gameID: string;
@@ -29,6 +30,14 @@ const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
   } = usePlayerActions(gameID, connectorID, user);
 
   const toRender = useMemo(() => {
+    if (gameState === GameState.ENDED) {
+      return (
+        <Link href={Routes.home}>
+          <Button>Got to Home</Button>
+        </Link>
+      );
+    }
+
     if (gameJoinStatus === 'SEARCHING') {
       return (
         <div className='flex gap-x-4 items-center'>
@@ -45,7 +54,7 @@ const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
           </Para>
         </div>
       );
-    } else if (gameJoinStatus === 'FOUND') {
+    } else if (gameJoinStatus === 'FOUND' && gameDetails != null) {
       return (
         <div className='flex flex-col gap-y-2 items-center'>
           <QuickGameGlance
@@ -57,18 +66,10 @@ const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
               theme: gameDetails.theme
             }}
           />
-          <Button
-            solid={true}
-            color='accent'
-            size='lg'
-            styleClasses='w-full'
-            onClick={joinOrFetchGamePlayer}
-          >
-            Join Game
-          </Button>
+          <Button onClick={joinOrFetchGamePlayer}>Join Game</Button>
         </div>
       );
-    } else {
+    } else if (player !== null) {
       return (
         <PlayArea
           ticketsRequested={player.requestForTickets}
@@ -117,7 +118,7 @@ const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
         );
         break;
 
-      case GameState.EVAL:
+      case GameState.ENDED:
         messageToShow = (
           <span className='font-semibold text-red-600'>Game has ended.</span>
         );

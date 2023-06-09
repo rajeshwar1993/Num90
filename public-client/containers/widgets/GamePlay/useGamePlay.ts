@@ -67,7 +67,7 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
       FF_CONVERT_LIVE_GAME_TO_HISTORY
     );
 
-    await func({
+    func({
       gameUID: gamePlay.gameMeta?.uid,
       gameId: gameID,
       connectorId: gamePlay.gameConnectId,
@@ -75,7 +75,7 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
     });
 
     // redirect to my games
-    router.replace(Routes.myGames);
+    router.replace(Routes.home);
   };
 
   // bingo functions
@@ -198,6 +198,11 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
   const evalTicketNum = async (ticketId: string, row: number, col: number) => {
     let updatedTicket = { ...tickets[ticketId] };
     let num = updatedTicket.cells[row][col].num;
+
+    if (num === null) {
+      // TODO - handle error
+      return;
+    }
 
     let mark = false;
     if (board[num].isCalled) {
