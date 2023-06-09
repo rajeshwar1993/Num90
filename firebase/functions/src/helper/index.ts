@@ -16,6 +16,7 @@ export interface FunctionResponse {
 
 export const GAME_PLAY = 'game-plays';
 export const GAMES_META_COLLECTION = 'gamesMeta';
+export const GAMES_HISTORY_COLLECTION = 'gamesHistory';
 export enum GameState {
   NOT_STARTED,
   STARTED,
@@ -90,3 +91,20 @@ export const GamePlayKeys = {
   modifiedTS: 'modifiedTS',
   endTS: 'endTS'
 };
+
+export interface GamePlayHistoryModel {
+  uid: string;
+  gameConnectId: string;
+  gameUID: string;
+  players: string[]; // uid of the players
+  ticketCount: number;
+  prizes: { [id: string]: any };
+  gameEnv: string;
+  city: string;
+  state: string;
+  country: string;
+  createdTS: string;
+  isFullGame: boolean;
+  startTS: string;
+  endTS: string;
+}

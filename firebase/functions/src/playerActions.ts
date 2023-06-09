@@ -40,6 +40,8 @@ export const joinGameOrFetchExistingPlayer = async (
     `${GAME_PLAY}/${gameId}/${connectorId}/${GamePlayKeys.players}/${userId}`
   );
   const docSnap = await thisPlayerRef.once('value');
+
+  // if the player is already part of the game, return that - else continue to create new player
   if (docSnap.exists()) {
     res.value = docSnap.val();
     return res;

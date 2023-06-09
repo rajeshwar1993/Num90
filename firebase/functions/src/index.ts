@@ -1,5 +1,9 @@
 import * as functions from 'firebase-functions';
-import { createGamePlay, approveRejectTicketRequest } from './gamePlay';
+import {
+  createGamePlay,
+  approveRejectTicketRequest,
+  convertLiveGameToHistory
+} from './gamePlay';
 import { joinGameOrFetchExistingPlayer } from './playerActions';
 import { initializeApp } from 'firebase-admin/app';
 
@@ -19,4 +23,7 @@ export const approveRejectTicketRequestFF = functions.https.onCall(
 );
 export const joinGameOrFetchExistingFF = functions.https.onCall(
   joinGameOrFetchExistingPlayer
+);
+export const convertLiveGameToHistoryFF = functions.https.onCall(
+  convertLiveGameToHistory
 );

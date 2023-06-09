@@ -7,7 +7,9 @@ import {
   FunctionResponse,
   GAME_PLAY,
   GameMetaKeys,
+  GamePlayHistoryModel,
   GamePlayKeys,
+  GAMES_HISTORY_COLLECTION,
   GAMES_META_COLLECTION,
   GameState,
   Ticket
@@ -251,6 +253,109 @@ export const approveRejectTicketRequest = async (
   // remove ticket request
   await playerRef.update({
     requestForTickets: null
+  });
+
+  res.value = true;
+  return res;
+};
+
+export const convertLiveGameToHistory = async (
+  data: {
+    gameUID: string;
+    gameId: string;
+    connectorId: string;
+    userId: string;
+  },
+  context: functions.https.CallableContext
+) => {
+  const res: FunctionResponse = {
+    value: null,
+    error: false,
+    message: null
+  };
+
+  let { gameUID, gameId, userId, connectorId } = data;
+  // check for userId and Game Id
+  if (!gameUID || !gameId || !userId || !connectorId) {
+    res.error = true;
+    res.message = 'Invalid arguments';
+    return res;
+  }
+
+  // check for proper auth
+  if (context.auth === undefined || context.auth.uid !== userId) {
+    res.error = true;
+    res.message = 'Incorrect user.';
+    return res;
+  }
+
+  // check if the gameID/connectorID exists in the RDB
+  const rdb = getDatabase();
+  const gameplayRef = rdb.ref(`${GAME_PLAY}/${gameId}/${connectorId}`);
+  const docSnap = await gameplayRef.once('value');
+  if (!docSnap.exists()) {
+    res.error = true;
+    res.message = 'Cannot find game.';
+    return res;
+  }
+
+  // if exists, fetch all the data
+  const gamePlayData = docSnap.val();
+
+  // check if the same state is ended, if not stop processsing
+  // TODO - use proper enums to check this
+  if (gamePlayData['gameState'] !== 3) {
+    res.error = true;
+    res.message = 'Game has not ended yet';
+    return res;
+  }
+
+  // convert the data into a game history object and save in firestore
+
+  const players = gamePlayData['players']
+    ? Object.keys(gamePlayData['players'])
+    : [];
+  const ticketCount = gamePlayData['tickets']
+    ? Object.keys(gamePlayData['tickets']).length
+    : 0;
+
+  const gameHistory: GamePlayHistoryModel = {
+    uid: gamePlayData['uid'],
+    gameConnectId: gamePlayData['gameConnectId'],
+    gameUID: gamePlayData['gameMeta']['uid'],
+    players, // TODO
+    ticketCount, // TODO
+    prizes: gamePlayData['prizes'],
+    gameEnv: gamePlayData['gameEnv'],
+    city: gamePlayData['city'],
+    state: gamePlayData['state'],
+    country: gamePlayData['country'],
+    createdTS: gamePlayData['createdTS'],
+    isFullGame: gamePlayData['isFullGame'],
+    startTS: gamePlayData['startTS'],
+    endTS: gamePlayData['endTS']
+  };
+
+  const db = getFirestore();
+
+  const gameHistoryDoc = db
+    .collection(GAMES_HISTORY_COLLECTION)
+    .doc(gameHistory.uid);
+
+  await gameHistoryDoc.set({ ...gameHistory });
+
+  // TODO add the played games (user to played games map) in a playedGames collection
+
+  // ?future - have an insights collection that will generate insights for users, create
+
+  // delete the live game from RDB
+  await gameplayRef.remove();
+
+  // remove from active games array in gamesMeta collection
+  const gameMetaDoc = db.collection(GAMES_META_COLLECTION).doc(gameUID);
+
+  await gameMetaDoc.update({
+    activeGames: FieldValue.arrayRemove(connectorId)
   });
 
   res.value = true;

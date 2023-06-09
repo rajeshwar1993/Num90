@@ -20,9 +20,12 @@ import {
 import { GamePlayKeys } from '../../../constants/dbKeys';
 import useAuth from '../../../app/AuthProvider';
 import { httpsCallable } from 'firebase/functions';
+import { useRouter } from 'next/navigation';
+import Routes from '@/constants/routes';
 
 const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
   const { user } = useAuth();
+  const router = useRouter();
 
   const notCalledNums = useRef(genInitialNumSet());
 
@@ -65,13 +68,14 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
     );
 
     await func({
-      gameUID: gamePlay.uid,
+      gameUID: gamePlay.gameMeta?.uid,
       gameId: gameID,
       connectorId: gamePlay.gameConnectId,
       userId: user.uid
     });
 
     // redirect to my games
+    router.replace(Routes.myGames);
   };
 
   // bingo functions

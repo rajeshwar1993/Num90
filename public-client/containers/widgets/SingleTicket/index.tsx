@@ -23,7 +23,7 @@ const SingleTicket: FC<Props> = ({
   isEvalMode = false,
   prizes = {},
   markNum,
-  raiseForEvaluation = null,
+  raiseForEvaluation,
   markEvalCorrect = null,
   markEvalInCorrect = null
 }) => {
@@ -47,7 +47,8 @@ const SingleTicket: FC<Props> = ({
       prizeToShout: { value: string };
     };
     setShowPrizeOptions(false);
-    raiseForEvaluation(ticket.uid, target.prizeToShout.value);
+    if (raiseForEvaluation)
+      raiseForEvaluation(ticket.uid, target.prizeToShout.value);
   };
 
   const prizesRadioItems = useMemo(() => {
@@ -83,7 +84,7 @@ const SingleTicket: FC<Props> = ({
             'justify-center',
             'items-center',
             'rounded-full',
-            cell.isMarked && 'text-skin-inverted bg-skin-accent',
+            cell.isMarked && 'text-accent-foreground bg-accent',
             borderStyle
           )}
         >
@@ -98,7 +99,7 @@ const SingleTicket: FC<Props> = ({
     <div
       className={clsx('min-w-[300px]', 'w-full', 'max-w-xl', 'p-2', 'mx-auto')}
     >
-      <div className='flex justify-between items-center p-2 border border-b-0 border-skin-primary rounded-t-lg'>
+      <div className='flex justify-between items-center p-2 border border-b-0 border-primary rounded-t-lg'>
         <span>
           Ticked ID: <span className='font-bold'> {ticket.seqId}</span>
         </span>
@@ -120,7 +121,7 @@ const SingleTicket: FC<Props> = ({
                 className={clsx(
                   'p-0.5',
                   'border',
-                  'border-skin-primary',
+                  'border-primary',
                   'aspect-square',
                   'text-sm',
                   'font-semibold',
@@ -152,7 +153,7 @@ const SingleTicket: FC<Props> = ({
         </div>
       )}
       {showPrizeOptions && isEvalMode === false && (
-        <div className='border border-t-0 border-skin-primary rounded-b-lg p-2'>
+        <div className='border border-t-0 border-primary rounded-b-lg p-2'>
           <Form submitHandlerFunc={handleShoutOutSubmit}>
             <span>Choose the prize:</span>
             <div className='my-4'>
