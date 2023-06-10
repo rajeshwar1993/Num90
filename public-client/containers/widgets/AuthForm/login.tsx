@@ -72,18 +72,14 @@ const LoginForm: FC<Props> = ({ loading, onLogin, changeTab }) => {
             <Separator orientation='vertical' className='ml-4' />
             <Button
               variant='link'
+              type='button'
               size={'sm'}
               onClick={changeTab.bind(null, 2)}
             >
               forgot password?
             </Button>
           </div>
-          <Button
-            color='accent'
-            loading={loading}
-            testid={tid.btnLoginSubmit}
-            type='submit'
-          >
+          <Button loading={loading} testid={tid.btnLoginSubmit} type='submit'>
             Login
           </Button>
           <div className='text-center'>
