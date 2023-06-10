@@ -84,7 +84,7 @@ const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
         />
       );
     }
-  }, [gameJoinStatus, player, tickets, prizes, loading]);
+  }, [gameJoinStatus, player, tickets, prizes, loading, gameState]);
 
   const topBar = useMemo(() => {
     let messageToShow = (

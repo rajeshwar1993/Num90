@@ -1,14 +1,7 @@
 import { Player, Prize } from '../../../data_models';
 import { FC, useMemo } from 'react';
-import { SubHeading, TableView } from '../../../components';
+import { TableView } from '../../../components';
 import { TableRow } from '@/components/Table';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
-import { Button } from '@/components/ui/button';
 
 interface Props {
   prizes: Prize[];
