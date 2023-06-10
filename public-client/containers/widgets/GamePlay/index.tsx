@@ -20,6 +20,7 @@ interface Props {
 
 const GamePlay: FC<Props> = ({ gameID, gamePlay }) => {
   const {
+    loading,
     gameState,
     board,
     lastNums,
@@ -103,6 +104,7 @@ const GamePlay: FC<Props> = ({ gameID, gamePlay }) => {
       </div>
       <div className={clsx('md:col-span-1')}>
         <PlayerList
+          approveRejectTicketRequestLoading={loading.approveRejectTicketRequest}
           gameID={gameID}
           connectorId={gamePlay.gameConnectId}
           approveRejectTicketRequest={approveRejectTicketRequest}

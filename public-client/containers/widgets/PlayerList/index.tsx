@@ -3,14 +3,15 @@ import { FC, useMemo, useState } from 'react';
 import {
   AccordionComp,
   TextInput,
-  Button,
   SubHeading,
   ModalDialog,
   Para
 } from '../../../components';
 import QRCode from 'react-qr-code';
+import { Button } from '@/components/ui/button';
 
 interface Props {
+  approveRejectTicketRequestLoading: boolean;
   gameID: string;
   connectorId: string;
   players: { [key: string]: Player };
@@ -22,6 +23,7 @@ interface Props {
 }
 
 const PlayerList: FC<Props> = ({
+  approveRejectTicketRequestLoading,
   gameID,
   connectorId,
   players,
@@ -58,27 +60,25 @@ const PlayerList: FC<Props> = ({
                 Request for {player.requestForTickets} tickets:
               </Para>
               <Button
+                loading={approveRejectTicketRequestLoading}
                 onClick={approveRejectTicketRequest.bind(
                   null,
                   player.uid,
                   player.requestForTickets,
                   'APPROVE'
                 )}
-                solid={true}
-                color='accent'
-                size='sm'
               >
                 Approve
               </Button>
 
               <Button
+                loading={approveRejectTicketRequestLoading}
                 onClick={approveRejectTicketRequest.bind(
                   null,
                   player.uid,
                   player.requestForTickets,
                   'REJECT'
                 )}
-                size='sm'
               >
                 Reject
               </Button>

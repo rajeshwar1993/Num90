@@ -29,6 +29,11 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
 
   const notCalledNums = useRef(genInitialNumSet());
 
+  const [loading, setLoading] = useState<{
+    approveRejectTicketRequest: boolean;
+  }>({
+    approveRejectTicketRequest: false
+  });
   const [gameState, setGameState] = useState<GameState>(gamePlay.gameState);
   const [board, updateBoard] = useState<{
     [key: string]: BingoBoardCell;
@@ -43,6 +48,14 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
     gamePlay.players
   );
   const [tickets, updateTickets] = useState<{ [key: string]: Ticket }>({});
+
+  const updateLoading = (key: 'approveRejectTicketRequest', value: boolean) => {
+    setLoading(l => ({
+      ...l,
+      [key]: value
+    }));
+  };
+
   // basic functions
   const startGame = () => {
     Realtime.GamePlay.startGame(gameID, gamePlay.gameConnectId);
@@ -119,6 +132,8 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
         return;
       }
 
+      updateLoading('approveRejectTicketRequest', true);
+
       const func = httpsCallable<unknown, FunctionResponse>(
         functions,
         FF_APPROVE_REJECT_TICKET
@@ -136,8 +151,11 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
 
       if (res.data.error) {
         // TODO - handle error
+        updateLoading('approveRejectTicketRequest', false);
         return;
       }
+
+      updateLoading('approveRejectTicketRequest', false);
       return true;
     },
     [gameID, gamePlay.gameConnectId, user?.uid]
@@ -259,6 +277,7 @@ const useGamePlay = (gameID: string, gamePlay: GamePlayModel) => {
   }, [gameID, gamePlay.gameConnectId]);
 
   return {
+    loading,
     gameState,
     board,
     lastNums,
