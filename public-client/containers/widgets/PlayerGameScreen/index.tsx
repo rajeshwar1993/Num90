@@ -17,6 +17,7 @@ interface Props {
 
 const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
   const {
+    loading,
     gameState,
     gameJoinStatus,
     gameDetails,
@@ -66,7 +67,9 @@ const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
               theme: gameDetails.theme
             }}
           />
-          <Button onClick={joinOrFetchGamePlayer}>Join Game</Button>
+          <Button loading={loading.joinGame} onClick={joinOrFetchGamePlayer}>
+            Join Game
+          </Button>
         </div>
       );
     } else if (player !== null) {
@@ -81,7 +84,7 @@ const PlayerGameScreen: FC<Props> = ({ gameID, connectorID, user }) => {
         />
       );
     }
-  }, [gameJoinStatus, player, tickets, prizes]);
+  }, [gameJoinStatus, player, tickets, prizes, loading]);
 
   const topBar = useMemo(() => {
     let messageToShow = (

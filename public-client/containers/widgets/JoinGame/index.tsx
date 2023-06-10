@@ -16,25 +16,6 @@ interface Props {
 
 const JoinGame: FC<Props> = ({ gameId, connectorId }) => {
   const { user, loading: userLoading, savePlayerData } = useAuth();
-  const [game, setGame] = useState<{
-    loading: boolean;
-    data: GameMetaModel | null;
-  }>({
-    loading: false,
-    data: null
-  });
-
-  // const fetchGameData = async (gameId: string) => {
-  //   setGame(g => ({ ...g, loading: true }));
-  //   const res = await Firestore.GameMeta.getGameById(gameId);
-  //   setGame({ data: res || null, loading: false });
-  // };
-
-  // useEffect(() => {
-  //   if (gameId) {
-  //     fetchGameData(gameId);
-  //   }
-  // }, [gameId]);
 
   const toRender = useMemo(() => {
     if (userLoading) {
@@ -58,7 +39,7 @@ const JoinGame: FC<Props> = ({ gameId, connectorId }) => {
         <PlayerGameConnectorForm gameID={gameId} connectorID={connectorId} />
       );
     }
-  }, [userLoading, user, gameId, connectorId, game]);
+  }, [userLoading, user, gameId, connectorId]);
 
   return (
     <div className='flex flex-col justify-center items-center text-left mx-auto max-w-xs h-full'>

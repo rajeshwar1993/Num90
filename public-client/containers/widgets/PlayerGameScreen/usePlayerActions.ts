@@ -23,6 +23,9 @@ const usePlayerActions = (
   connectorID: string,
   user: UserModel
 ) => {
+  const [loading, setLoading] = useState<{ joinGame: boolean }>({
+    joinGame: false
+  });
   const [gameState, setGameState] = useState<GameState>(GameState.NOT_STARTED);
   const [gameJoinStatus, setGameJoinStatus] = useState<
     'NOT_FOUND' | 'FOUND' | 'SEARCHING' | 'JOINED'
@@ -33,6 +36,13 @@ const usePlayerActions = (
   const [player, setPlayer] = useState<Player | null>(null);
   const [prizes, setPrizes] = useState<{ [key: string]: Prize }>({});
   const [tickets, setTickets] = useState<{ [uid: string]: Ticket }>({});
+
+  const updateLoading = (key: 'joinGame', value: boolean) => {
+    setLoading(l => ({
+      ...l,
+      [key]: value
+    }));
+  };
 
   const checkIfGameExists = useCallback(
     async (gameID: string, connectorID: string) => {
@@ -49,6 +59,7 @@ const usePlayerActions = (
   );
 
   const joinOrFetchGamePlayer = async () => {
+    updateLoading('joinGame', true);
     const func = httpsCallable<unknown, FunctionResponse>(
       functions,
       FF_JOIN_GAME_OR_FETCH_EXISTING
@@ -62,13 +73,16 @@ const usePlayerActions = (
     });
 
     if (res.data.error) {
-      // throw error
+      // TODO - handle error
+      updateLoading('joinGame', false);
+
       return;
     }
 
     const player: Player = res.data.value;
     setPlayer(player);
     setGameJoinStatus('JOINED');
+    updateLoading('joinGame', false);
   };
 
   const handleGameStateChange = (snap: DataSnapshot) => {
@@ -190,6 +204,7 @@ const usePlayerActions = (
   }, [player?.uid, player?.ticketsIDs]);
 
   return {
+    loading,
     gameState,
     gameJoinStatus,
     gameDetails,
