@@ -6,10 +6,13 @@ import {
   ModalDialog
 } from '../../../components';
 import { Button } from '@/components/ui/button';
+import GameStats from './GameStats';
+import { Player } from '@/data_models';
 
 interface Props {
   title: string;
   gameSate: GameState;
+  players: { [key: string]: Player };
   startGame: () => void;
   pauseGame: () => void;
   resumeGame: () => void;
@@ -19,6 +22,7 @@ interface Props {
 const GameControls: FC<Props> = ({
   title,
   gameSate,
+  players,
   startGame,
   pauseGame,
   resumeGame,
@@ -38,11 +42,11 @@ const GameControls: FC<Props> = ({
 
   return (
     <>
-      <div className='grid grid-cols-2 gap-x-2 shadow-lg border rounded-lg p-4 border-skin-primary'>
-        <h1 className=' text-2xl md:text-4xl font-semibold line-clamp-2'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 shadow-lg border rounded-lg p-4 border-skin-primary'>
+        <h1 className='col-span-1 text-2xl md:text-3xl xl:text-4xl font-semibold line-clamp-2'>
           {title}
         </h1>
-        <div className='grid grid-cols-2 gap-2'>
+        <div className='grid grid-cols-2 gap-2 '>
           <Button size='sm' onClick={startGame} disabled={!isStartGameEnabled}>
             start
           </Button>
@@ -63,6 +67,9 @@ const GameControls: FC<Props> = ({
           >
             end
           </ButtonWithConfirmation>
+        </div>
+        <div>
+          <GameStats players={players} />
         </div>
       </div>
       <ModalDialog open={gameSate === GameState.ENDED} closeModal={() => {}}>

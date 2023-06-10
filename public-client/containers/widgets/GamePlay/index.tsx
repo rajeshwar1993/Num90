@@ -44,64 +44,50 @@ const GamePlay: FC<Props> = ({ gameID, gamePlay }) => {
       className={clsx(
         'grid',
         'grid-cols-1',
-        'md:grid-cols-2',
-        'lg:grid-cols-5',
+        'md:grid-cols-3',
         'gap-4',
-        'md:gap-x-6',
-        'lg:gap-x-10',
-        'xl:gap-x-16'
+        'md:gap-x-4',
+        'lg:gap-x-8',
+        'xl:gap-x-10'
       )}
     >
-      <div
-        className={clsx(
-          'md:col-span-2 lg:col-span-5',
-          'grid',
-          'grid-cols-1',
-          'md:grid-cols-2',
-          'lg:grid-cols-5',
-          'gap-4',
-          'md:gap-x-6',
-          'lg:gap-x-10',
-          'xl:gap-x-16'
-        )}
-      >
-        <div className='md:col-span-2'>
-          <GameControls
-            title={gamePlay.gameMeta?.title ?? ''}
-            gameSate={gameState}
-            startGame={startGame}
-            resumeGame={resumeGame}
-            pauseGame={pauseGame}
-            endGame={endGame}
-          />
-        </div>
-        <div className='md:col-span-3'>
-          <GameStats players={players} />
-        </div>
-      </div>
-      <div className={clsx('flex', 'flex-col', 'md:col-span-2')}>
-        <BingoBoard
-          board={board}
-          generateNextNumber={generateNextNumber}
-          gameState={gameState}
-        />
-
-        {lastNums.length > 0 && <LastCalledNumbers recent={lastNums} />}
-      </div>
-      <div className={clsx('md:col-span-2')}>
-        <div className='min-h-[40%] pb-6 mb-6'>
-          <GamePlayPrize prizes={Object.values(prizes)} players={players} />
-        </div>
-        <TicketEvaluations
+      <div className='grid gap-4 col-span-2'>
+        <GameControls
+          title={gamePlay.gameMeta?.title ?? ''}
+          gameSate={gameState}
           players={players}
-          prizes={gamePlay.prizes}
-          tickets={tickets}
-          fetchTicket={fetchTicket}
-          markEvalCorrect={markEvaluationCorrect}
-          markEvalInCorrect={rejectTicketEvaluation}
-          evalTicketNum={evalTicketNum}
+          startGame={startGame}
+          resumeGame={resumeGame}
+          pauseGame={pauseGame}
+          endGame={endGame}
         />
+        <div className={clsx('grid', 'grid-cols-1 md:grid-cols-3')}>
+          <div className='md:col-span-2'>
+            <BingoBoard
+              board={board}
+              generateNextNumber={generateNextNumber}
+              gameState={gameState}
+            />
+          </div>
+
+          {lastNums.length > 0 && <LastCalledNumbers recent={lastNums} />}
+        </div>
+        {/* <div>
+          <div className='min-h-[40%] pb-6 mb-6'>
+            <GamePlayPrize prizes={Object.values(prizes)} players={players} />
+          </div>
+          <TicketEvaluations
+            players={players}
+            prizes={gamePlay.prizes}
+            tickets={tickets}
+            fetchTicket={fetchTicket}
+            markEvalCorrect={markEvaluationCorrect}
+            markEvalInCorrect={rejectTicketEvaluation}
+            evalTicketNum={evalTicketNum}
+          />
+        </div> */}
       </div>
+
       <div className={clsx('md:col-span-1')}>
         <PlayerList
           approveRejectTicketRequestLoading={loading.approveRejectTicketRequest}

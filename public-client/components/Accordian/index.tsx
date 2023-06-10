@@ -14,7 +14,13 @@ interface Props {
 
 const AccordionComp: FC<Props> = ({ items }) => (
   <Accordion.Root
-    className={clsx('bg-transparent', 'w-full')}
+    className={clsx(
+      'bg-transparent',
+      'w-full',
+      'border',
+      'rounded-lg',
+      'relative'
+    )}
     type='single'
     defaultValue='item-1'
     collapsible
@@ -23,48 +29,39 @@ const AccordionComp: FC<Props> = ({ items }) => (
       <Accordion.Item
         value={item.id}
         key={item.id}
-        className={clsx(
-          'my-2',
-          'first:mt-0',
-          'rounded-lg',
-          'border',
-          'border-skin-primary',
-          'relative'
-        )}
+        className={clsx('my-2', 'first:mt-0')}
       >
         {item.pinger && (
-          <span className='absolute -left-1 -top-1 flex h-3 w-3'>
-            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-skin-accent opacity-75'></span>
-            <span className='relative inline-flex rounded-full h-3 w-3 bg-skin-accent'></span>
+          <span className='absolute -left-1 top-[calc(50%-6px)] flex h-3 w-3'>
+            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-accent'></span>
+            <span className='relative inline-flex rounded-full h-3 w-3 bg-accent'></span>
           </span>
         )}
         <Accordion.Header className='flex'>
           <Accordion.Trigger
             className={clsx(
-              'text-skin-primary',
+              'text-primary',
               'group',
               'flex',
               'flex-1',
               'cursor-pointer',
               'items-center',
               'justify-between',
-              'bg-transparent',
+              'bg-background',
               'px-5',
-              'leading-none',
-              'shadow-[0_1px_0]',
               'outline-none'
             )}
           >
             <>{item.header}</>
             <ChevronDownIcon
-              className='text-skin-primary ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 group-data-[state=open]:rotate-180'
+              className='text-primary ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 group-data-[state=open]:rotate-180'
               aria-hidden
             />
           </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content
           className={clsx(
-            'text-skin-primar bg-transparent data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden text-[15px]'
+            'text-primary bg-background data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden text-[15px]'
           )}
         >
           <div className='py-[15px] px-5'>

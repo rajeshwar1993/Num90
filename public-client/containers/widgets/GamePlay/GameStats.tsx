@@ -29,12 +29,11 @@ const GameStats: FC<Props> = ({ players }) => {
   }, [players]);
 
   return (
-    <div className='border border-skin-primary rounded-lg p-4'>
-      <div className='grid grid-cols-2 lg:grid-cols-5'>
-        <SubHeading>Stats</SubHeading>
+    <div className=''>
+      <div className='grid grid-cols-3'>
         <StatDisplay title='Players' value={gameStats.pl} />
-        <StatDisplay title='Tickets Dispensed' value={gameStats.td} />
-        <StatDisplay title='Tickets Remaining' value={0} />
+        <StatDisplay title='Tickets' value={gameStats.td} />
+        <StatDisplay title='Remaining' value={0} />
       </div>
     </div>
   );

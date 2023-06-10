@@ -2,13 +2,14 @@ import { Player } from '../../../data_models';
 import { FC, useMemo, useState } from 'react';
 import {
   AccordionComp,
-  TextInput,
   SubHeading,
   ModalDialog,
   Para
 } from '../../../components';
 import QRCode from 'react-qr-code';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 interface Props {
   approveRejectTicketRequestLoading: boolean;
@@ -48,7 +49,7 @@ const PlayerList: FC<Props> = ({
       id: player.uid,
       header: (
         <div className='flex flex-col gap-y-1 items-start py-2'>
-          <span className='text-xs font-semibold'>{player.playerId}</span>
+          <span className='text-xs font-bold'>{player.playerId}</span>
           <span>{player.name}</span>
         </div>
       ),
@@ -60,6 +61,7 @@ const PlayerList: FC<Props> = ({
                 Request for {player.requestForTickets} tickets:
               </Para>
               <Button
+                size={'sm'}
                 loading={approveRejectTicketRequestLoading}
                 onClick={approveRejectTicketRequest.bind(
                   null,
@@ -72,6 +74,7 @@ const PlayerList: FC<Props> = ({
               </Button>
 
               <Button
+                size={'sm'}
                 loading={approveRejectTicketRequestLoading}
                 onClick={approveRejectTicketRequest.bind(
                   null,
@@ -93,27 +96,21 @@ const PlayerList: FC<Props> = ({
     }));
 
     return <AccordionComp items={items} />;
-  }, [players, searchText]);
+  }, [players, searchText, approveRejectTicketRequestLoading]);
 
   return (
     <>
-      <div>
+      <div className='px-2'>
         <div className='mb-2 flex gap-x-3 items-center'>
           <SubHeading>Players</SubHeading>
-          <Button
-            color='accent'
-            solid={true}
-            onClick={() => setShowJoinModal(true)}
-          >
-            Join Game
-          </Button>
+          <Button onClick={() => setShowJoinModal(true)}>Join Game</Button>
         </div>
-        <TextInput
+
+        <Input
           id='playerSearch'
           name='playerSearch'
-          styleClasses='mb-4'
-          label='Search'
-          placeholder='Player name or ID'
+          className='mb-4'
+          placeholder='Search with Player name or ID'
           onChange={e => {
             if (e.target.value === '') {
               setSearchText(null);
@@ -122,7 +119,7 @@ const PlayerList: FC<Props> = ({
             }
           }}
         />
-        {playerListAccordians}
+        <ScrollArea>{playerListAccordians}</ScrollArea>
       </div>
       <ModalDialog
         open={showJoinModal}

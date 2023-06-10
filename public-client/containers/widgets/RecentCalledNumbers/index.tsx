@@ -36,7 +36,9 @@ const Ball: FC<{ num: number; index: number; first?: boolean }> = ({
         'border',
         'flex justify-center items-center',
         'rounded-full',
-        first ? 'text-3xl p-4 h-20 w-20' : 'p-2 h-10 w-10',
+        first
+          ? 'text-3xl md:text-6xl p-4 h-20 w-20 md:h-40 md:w-40'
+          : 'p-2 h-10 w-10',
         'bg-skin-accent',
         'text-skin-inverted'
       )}
