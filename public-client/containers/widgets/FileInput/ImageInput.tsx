@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import React, { FC, useRef } from 'react';
 import { Image } from '../../../data_models';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { Button, Para } from '../../../components';
 import clsx from 'clsx';
+import { Button } from '@/components/ui/button';
 
 export interface SelectedImage {
   savedImage: Image | null;
@@ -53,6 +53,7 @@ const ImageInput: FC<Props> = ({
         const maxImageSize = maxSize * 1024 * 1024 + 1024; //slightly more than defined size
         // check file size
         if (file.size > maxImageSize) {
+          // TODO - handle errors
           //   handleRuntimeErrors(
           //     `Max size exceeded. Max allowed image size is ${maxSize}MB.`,
           //     'max-file-size',
@@ -105,11 +106,7 @@ const ImageInput: FC<Props> = ({
       <div>
         {selectedImages.length === 0 && (
           <>
-            <Button
-              color='primary'
-              size='sm'
-              onClick={() => ref.current.click()}
-            >
+            <Button type='button' size='sm' onClick={() => ref.current.click()}>
               {btnText}
             </Button>
             <input
@@ -147,9 +144,9 @@ const ImageInput: FC<Props> = ({
                 )}
 
                 <Button
-                  onlyIcon={true}
-                  solid={true}
-                  styleClasses='absolute -top-3 -right-3'
+                  type='button'
+                  size={'sm'}
+                  className='absolute -top-3 -right-3'
                   onClick={() => onRemove(img)}
                 >
                   <Cross2Icon />

@@ -84,7 +84,7 @@ const GamePlayDisplay: FC<Props> = ({ gameID, gamePlay }) => {
           <div className='max-w-xs aspect-square rounded-lg overflow-hidden'>
             <CustImage
               image={{
-                src: logo.src,
+                src: gamePlay.gameMeta?.theme.logo?.src || logo.src,
                 alt: 'Logo'
               }}
             />
@@ -121,9 +121,9 @@ const GamePlayDisplay: FC<Props> = ({ gameID, gamePlay }) => {
     );
   } else {
     toRender = (
-      <div className={clsx('p-4 max-w-7xl mx-auto')}>
+      <div className={clsx('p-8 max-w-7xl')}>
         <div>
-          <div className='p-2 border-b border-skin-primary flex items-center gap-x-4'>
+          <div className='p-2 border-b border-primary flex items-center gap-x-4'>
             <div className='w-9 aspect-square rounded-lg overflow-hidden'>
               <CustImage
                 image={{
@@ -211,7 +211,16 @@ const GamePlayDisplay: FC<Props> = ({ gameID, gamePlay }) => {
 
   return (
     <div className='gap-y-4'>
-      <div className='border-skin-primary min-h-[70vh]'>{toRender}</div>
+      <div
+        className='min-h-[70vh] flex items-center justify-center bg-cover bg-no-repeat'
+        style={{
+          backgroundImage: `url(${gamePlay.gameMeta?.theme.bgImage?.src || ''})`
+        }}
+      >
+        <div className='p-8 bg-background/70 backdrop-blur-sm rounded-lg '>
+          {toRender}
+        </div>
+      </div>
       <div className='text-center mt-8'>
         <Para>hosted on</Para>
         <SubHeading>num90 games</SubHeading>
