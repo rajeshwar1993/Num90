@@ -36,8 +36,8 @@ const RadioGroup: FC<Props> = ({
                 `${active ? 'ring-2 ring-white' : ''}
             ${
               checked
-                ? 'bg-skin-accent text-skin-inverted'
-                : 'bg-skin-base text-skin-primary'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-background text-primary'
             }
               relative flex cursor-pointer rounded-lg p-2 shadow-md focus:outline-none border border-skin-primary`
               }

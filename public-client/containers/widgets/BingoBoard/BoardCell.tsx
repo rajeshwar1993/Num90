@@ -16,16 +16,16 @@ const BoardCell: FC<Props> = ({ cell }) => {
         'font-semibold',
         'w-6',
         'h-6',
-        'md:w-8',
-        'md:h-8',
-        '2xl:w-12',
-        '2xl:h-12',
+        'md:w-10',
+        'md:h-10',
+        '2xl:w-14',
+        '2xl:h-14',
         'flex',
         'justify-center',
         'items-center',
 
         cell.isCalled === false
-          ? 'bg-primary text-primary-foreground rounded-lg'
+          ? 'bg-secondary text-secondary-foreground rounded-lg'
           : 'bg-accent text-accent-foreground rounded-full'
       )}
     >

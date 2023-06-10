@@ -2,8 +2,9 @@ import { FC, useMemo, useState } from 'react';
 import { BingoBoardCell } from '../../../data_models';
 import clsx from 'clsx';
 import BoardCell from './BoardCell';
-import { Button, SubHeading } from '../../../components';
+import { SubHeading } from '../../../components';
 import { GameState } from '../../../constants/enums';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   gameState: GameState;
@@ -45,22 +46,19 @@ const BingoBoard: FC<Props> = ({ gameState, board, generateNextNumber }) => {
   };
 
   return (
-    <div className='relative flex flex-col items-center justify-center p-4'>
+    <div className='relative flex flex-col items-center justify-center p-1'>
       {gameStateMessage && (
         <div className='absolute text-primary w-full h-full bg-background/90 rounded-lg flex items-center justify-center'>
           <SubHeading>{gameStateMessage}</SubHeading>
         </div>
       )}
-      <div className={clsx('grid', 'grid-cols-10', 'gap-2 2xl:gap-3', 'mb-4')}>
+      <div className={clsx('grid', 'grid-cols-10', 'gap-2 2xl:gap-4', 'mb-4')}>
         {Object.values(board).map(cell => (
           <BoardCell key={cell.num} cell={cell} />
         ))}
       </div>
       <Button
-        color='accent'
-        size='lg'
-        styleClasses='w-full'
-        solid={true}
+        className='w-full'
         onClick={handleNextNumberClick}
         disabled={!!gameStateMessage || nextNumWaitCounter > 0}
       >

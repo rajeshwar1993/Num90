@@ -98,7 +98,6 @@ const TicketEvaluations: FC<Props> = ({
 
   return (
     <div>
-      <SubHeading>Evaluation</SubHeading>
       <div>{evalData}</div>
     </div>
   );

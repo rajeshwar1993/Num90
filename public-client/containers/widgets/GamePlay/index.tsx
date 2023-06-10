@@ -11,7 +11,16 @@ import useGamePlay from './useGamePlay';
 import GamePlayPrize from '../GamePlayPrize';
 import TicketEvaluations from '../TicketEvaluation';
 import GameControls from './GameControls';
-import GameStats from './GameStats';
+import { Button } from '@/components/ui/button';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet';
 
 interface Props {
   gameID: string;
@@ -61,7 +70,7 @@ const GamePlay: FC<Props> = ({ gameID, gamePlay }) => {
           pauseGame={pauseGame}
           endGame={endGame}
         />
-        <div className={clsx('grid', 'grid-cols-1 md:grid-cols-3')}>
+        <div className={clsx('grid', 'grid-cols-1 md:grid-cols-3', 'gap-x-6')}>
           <div className='md:col-span-2'>
             <BingoBoard
               board={board}
@@ -69,23 +78,55 @@ const GamePlay: FC<Props> = ({ gameID, gamePlay }) => {
               gameState={gameState}
             />
           </div>
-
-          {lastNums.length > 0 && <LastCalledNumbers recent={lastNums} />}
-        </div>
-        {/* <div>
-          <div className='min-h-[40%] pb-6 mb-6'>
-            <GamePlayPrize prizes={Object.values(prizes)} players={players} />
+          <div>
+            {lastNums.length > 0 && <LastCalledNumbers recent={lastNums} />}
+            <div className='mt-4 grid grid-cols-2 gap-x-4'>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button>Rewards</Button>
+                </SheetTrigger>
+                <SheetContent position='bottom' size='content'>
+                  <SheetHeader>
+                    <SheetTitle>Rewards</SheetTitle>
+                  </SheetHeader>
+                  <GamePlayPrize
+                    prizes={Object.values(prizes)}
+                    players={players}
+                  />
+                  <SheetFooter>
+                    <SheetClose asChild>
+                      <Button type='button'>Close</Button>
+                    </SheetClose>
+                  </SheetFooter>
+                </SheetContent>
+              </Sheet>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button>Shoutouts</Button>
+                </SheetTrigger>
+                <SheetContent position='right' size='lg'>
+                  <SheetHeader>
+                    <SheetTitle>Shoutouts</SheetTitle>
+                  </SheetHeader>
+                  <TicketEvaluations
+                    players={players}
+                    prizes={gamePlay.prizes}
+                    tickets={tickets}
+                    fetchTicket={fetchTicket}
+                    markEvalCorrect={markEvaluationCorrect}
+                    markEvalInCorrect={rejectTicketEvaluation}
+                    evalTicketNum={evalTicketNum}
+                  />
+                  <SheetFooter>
+                    <SheetClose asChild>
+                      <Button type='button'>Close</Button>
+                    </SheetClose>
+                  </SheetFooter>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
-          <TicketEvaluations
-            players={players}
-            prizes={gamePlay.prizes}
-            tickets={tickets}
-            fetchTicket={fetchTicket}
-            markEvalCorrect={markEvaluationCorrect}
-            markEvalInCorrect={rejectTicketEvaluation}
-            evalTicketNum={evalTicketNum}
-          />
-        </div> */}
+        </div>
       </div>
 
       <div className={clsx('md:col-span-1')}>

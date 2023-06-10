@@ -29,20 +29,17 @@ const GamePlayPrize: FC<Props> = ({ prizes, players }) => {
       if (winnerArr.length) {
         winnerArr.forEach(playerID => {
           winnerList.push(
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant='link' size={'sm'} className='text-xs'>
-                    {`${players[playerID].name} (${players[playerID].playerId})`}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{`Ticket : ${prize.winnerPlayerId[playerID]}`}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <>
+              <small className='text-sm font-medium leading-none'>
+                {' '}
+                {`${players[playerID].name} (${players[playerID].playerId})`}
+              </small>
+              <small className='text-sm font-bold leading-none'>
+                {`-${prize.winnerPlayerId[playerID]}`}
+              </small>
+            </>
           );
-          winnerList.push(<span> </span>);
+          winnerList.push(<span>, </span>);
         });
       }
 
@@ -59,7 +56,6 @@ const GamePlayPrize: FC<Props> = ({ prizes, players }) => {
 
   return (
     <div>
-      <SubHeading styleClasses='mb-4'>Prizes</SubHeading>
       <TableView tableData={tableData} />
     </div>
   );

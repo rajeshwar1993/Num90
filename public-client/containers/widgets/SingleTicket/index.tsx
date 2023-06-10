@@ -1,12 +1,8 @@
 import clsx from 'clsx';
 import { Prize, Ticket, TicketCell } from '../../../data_models';
 import { FC, useCallback, useMemo, useState } from 'react';
-import {
-  Button,
-  ButtonWithConfirmation,
-  Form,
-  RadioGroup
-} from '../../../components';
+import { ButtonWithConfirmation, Form, RadioGroup } from '../../../components';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   ticket: Ticket;
@@ -104,13 +100,7 @@ const SingleTicket: FC<Props> = ({
           Ticked ID: <span className='font-bold'> {ticket.seqId}</span>
         </span>
         {raiseForEvaluation && isEvalMode == false && (
-          <Button
-            color='accent'
-            solid={true}
-            onClick={() => setShowPrizeOptions(true)}
-          >
-            Shout Out!
-          </Button>
+          <Button onClick={() => setShowPrizeOptions(true)}>Shout Out!</Button>
         )}
       </div>
       <div className={clsx('grid', 'grid-rows-3')}>
@@ -143,12 +133,10 @@ const SingleTicket: FC<Props> = ({
       </div>
       {markEvalCorrect && markEvalInCorrect && isEvalMode === true && (
         <div className='flex justify-between mt-4'>
-          <Button solid={true} color='accent' onClick={markEvalCorrect}>
-            Mark Correct
-          </Button>
+          <Button onClick={markEvalCorrect}>Mark Correct</Button>
 
           <ButtonWithConfirmation onClick={markEvalInCorrect}>
-            reject
+            Reject
           </ButtonWithConfirmation>
         </div>
       )}
@@ -167,9 +155,7 @@ const SingleTicket: FC<Props> = ({
               <Button type='button' onClick={() => setShowPrizeOptions(false)}>
                 cancel
               </Button>
-              <Button solid={true} color='accent' type='submit'>
-                Submit
-              </Button>
+              <Button type='submit'>Submit</Button>
             </div>
           </Form>
         </div>

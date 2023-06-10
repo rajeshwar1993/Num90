@@ -14,13 +14,7 @@ interface Props {
 
 const AccordionComp: FC<Props> = ({ items }) => (
   <Accordion.Root
-    className={clsx(
-      'bg-transparent',
-      'w-full',
-      'border',
-      'rounded-lg',
-      'relative'
-    )}
+    className={clsx('bg-transparent', 'w-full')}
     type='single'
     defaultValue='item-1'
     collapsible
@@ -29,14 +23,15 @@ const AccordionComp: FC<Props> = ({ items }) => (
       <Accordion.Item
         value={item.id}
         key={item.id}
-        className={clsx('my-2', 'first:mt-0')}
-      >
-        {item.pinger && (
-          <span className='absolute -left-1 top-[calc(50%-6px)] flex h-3 w-3'>
-            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-accent'></span>
-            <span className='relative inline-flex rounded-full h-3 w-3 bg-accent'></span>
-          </span>
+        className={clsx(
+          'my-2',
+          'first:mt-0',
+
+          'mb-4',
+          'border-b',
+          'rounded-lg'
         )}
+      >
         <Accordion.Header className='flex'>
           <Accordion.Trigger
             className={clsx(
@@ -49,10 +44,17 @@ const AccordionComp: FC<Props> = ({ items }) => (
               'justify-between',
               'bg-background',
               'px-5',
-              'outline-none'
+              'outline-none',
+              'relative'
             )}
           >
             <>{item.header}</>
+            {item.pinger && (
+              <span className='absolute left-0 top-[calc(50%-6px)] flex h-3 w-3'>
+                <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-accent'></span>
+                <span className='relative inline-flex rounded-full h-3 w-3 bg-accent'></span>
+              </span>
+            )}
             <ChevronDownIcon
               className='text-primary ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 group-data-[state=open]:rotate-180'
               aria-hidden

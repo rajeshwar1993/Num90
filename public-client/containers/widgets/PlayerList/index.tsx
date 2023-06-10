@@ -95,6 +95,14 @@ const PlayerList: FC<Props> = ({
       pinger: !!(player.requestForTickets || player.raiseForEvaluation)
     }));
 
+    if (items.length === 0) {
+      return (
+        <blockquote className='mt-6 pl-6 italic'>
+          No players have joined the game yet.
+        </blockquote>
+      );
+    }
+
     return <AccordionComp items={items} />;
   }, [players, searchText, approveRejectTicketRequestLoading]);
 
@@ -119,7 +127,9 @@ const PlayerList: FC<Props> = ({
             }
           }}
         />
-        <ScrollArea>{playerListAccordians}</ScrollArea>
+        <ScrollArea className='h-[calc(100vh-250px)] overflow-y-auto shadow-lg p-2 rounded-lg border'>
+          {playerListAccordians}
+        </ScrollArea>
       </div>
       <ModalDialog
         open={showJoinModal}
